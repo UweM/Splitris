@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
                     }
 
                 } catch (InterruptedException e) {
-                    break;
+                    
                 }
             }
         }.start();
