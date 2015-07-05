@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
     }
     private void server() {
 
-        final int width = 30;
+        final int width = 40;
         final int height = 20;
         final BlockScreen bs = new BlockScreen(30, width, height);
         bs.setOccupied(Color.BLUE);
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 
                 Server s;
                 try {
-                    s = new Server(4562);
+                    s = new Server(4562, "");
                     s.start();
                     s.addListener(new Listener() {
                         public void connected (Connection connection) {

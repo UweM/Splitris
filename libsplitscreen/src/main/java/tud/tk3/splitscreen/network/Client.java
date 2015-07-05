@@ -1,6 +1,15 @@
 package tud.tk3.splitscreen.network;
 
+import android.util.Log;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.ClientDiscoveryHandler;
 import com.esotericsoftware.kryonet.rmi.ObjectSpace;
+
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 import tud.tk3.splitscreen.output.IScreenView;
 
@@ -20,5 +29,36 @@ public class Client extends com.esotericsoftware.kryonet.Client {
 
     public <T> T getRemoteObject (int objectID, Class<T> iface) {
         return ObjectSpace.getRemoteObject(this, objectID, iface);
+    }
+
+    public void discoverScreenServers(final int port, final DiscoveryHandler handler) {
+
+        setDiscoveryHandler(new ClientDiscoveryHandler() {
+
+            @Override
+            public DatagramPacket onRequestNewDatagramPacket() {
+                return new DatagramPacket(new byte[20], 20);
+            }
+
+            @Override
+            public void onDiscoveredHost(DatagramPacket datagramPacket, Kryo kryo) {
+                Log.d("Lobby", "recv len: " + datagramPacket.getData().length);
+                ByteBuffer buf = ByteBuffer.wrap(datagramPacket.getData(), 0, datagramPacket.getLength());
+                String nickname = Charset.forName("UTF-8").decode(buf).toString();
+                handler.onFound(datagramPacket.getAddress(), nickname);
+            }
+
+            @Override
+            public void onFinally() {
+
+            }
+        });
+        new Thread() {
+
+            @Override
+            public void run() {
+                discoverHosts(port, 2000);
+            }
+        }.start();
     }
 }

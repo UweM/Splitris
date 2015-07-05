@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,7 +12,13 @@ import android.view.View;
 import android.widget.Button;
 
 import tud.tk3.splitris.Tetris.AppPreferences;
+
+import java.io.IOException;
+import java.net.InetAddress;
+
 import tud.tk3.splitscreen.Util;
+import tud.tk3.splitscreen.network.DiscoveryHandler;
+
 public class Lobby extends Activity {
 
     private Button mServerBtn, mClientBtn;
@@ -95,12 +99,24 @@ public class Lobby extends Activity {
 
 
     private void client() {
-
-        Log.d(TAG, "Client started");
-
+        GameContext.initClient();
+        GameContext.Client.discoverScreenServers(GameContext.PORT, new DiscoveryHandler() {
+            @Override
+            public void onFound(InetAddress address, String nickname) {
+                Log.d(TAG, "Found: " + nickname);
+            }
+        });
     }
+
     private void server() {
         Log.d(TAG, "Server started");
+
+        try {
+            GameContext.initServer("Nickname!!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Intent gamelobby = new Intent(this, GameLobby.class);
         startActivity(gamelobby);
     }
