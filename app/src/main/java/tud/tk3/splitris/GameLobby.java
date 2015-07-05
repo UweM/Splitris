@@ -2,7 +2,6 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,10 +14,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import tud.tk3.splitscreen.Util;
 
 public class GameLobby extends Activity {
 
@@ -28,6 +26,9 @@ public class GameLobby extends Activity {
     private List<String> mGameMember = new ArrayList<>();
     private int mSelectedItemId = -1;
     private boolean mSelectedItemHightlighted = false;
+    private ListView mMemberListView;
+
+    private StableArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +36,22 @@ public class GameLobby extends Activity {
         setContentView(R.layout.gamelobby);
 
 
-        ListView memberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
+        mMemberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
 
         mGameMember.add("member1");
         mGameMember.add("member2");
         mGameMember.add("member3");
         mGameMember.add("member4");
 
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+        adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, mGameMember);
 
-        memberListView.setAdapter(adapter);
+        mMemberListView.setAdapter(adapter);
 
-        memberListView.setSelector(R.color.material_blue_grey_800);
-        memberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        mMemberListView.setSelector(R.color.material_blue_grey_800);
+        mMemberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-        memberListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mMemberListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
@@ -59,8 +60,7 @@ public class GameLobby extends Activity {
                 mSelectedItemId = position;
 
                 Log.d(TAG, "item selected...");
-
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
 
             }
 
@@ -68,8 +68,15 @@ public class GameLobby extends Activity {
     }
 
     public void oneLeftBtnClicked(View view) {
-        //
-        //mGameMember.get(mSelectedItemId)
+        if(mSelectedItemId - 1 >= 0) {
+            Log.d(TAG, "left btn..., -1 id: " + mSelectedItemId);
+            Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
+            mMemberListView.requestFocusFromTouch();
+            mMemberListView.setSelection(mSelectedItemId - 1);
+            //mMemberListView.setItemChecked(mSelectedItemId - 1, true);
+            adapter.notifyDataSetChanged();
+            mSelectedItemId--;
+        }
     }
 
     public void onRightBtnClicked(View view) {
