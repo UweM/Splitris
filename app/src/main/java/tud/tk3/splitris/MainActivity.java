@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
                     Client c = new Client();
                     c.registerView(0, (ScreenView)findViewById(R.id.splitscreen));
                     c.registerView(1, (ScreenView)findViewById(R.id.splitscreen2));
-                    c.connect(5000, "192.168.0.150", 4562);
+                    c.connect(5000, "192.168.178.36", 4562);
                     while(true) Thread.sleep(5000);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
