@@ -3,6 +3,7 @@ package tud.tk3.splitris;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -12,19 +13,53 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import tud.tk3.splitris.Tetris.AppPreferences;
 import tud.tk3.splitscreen.Util;
 public class Lobby extends Activity {
 
     private Button mServerBtn, mClientBtn;
     private final static String TAG = "Lobby";
     private String mIpAddr;
+    SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lobby);
+        Context mContext = this.getApplicationContext();
+        //0 = mode private. only this app can read these preferences
+        mPrefs = mContext.getSharedPreferences("myAppPrefs", 0);
 
         mIpAddr = Util.wifiIpAddress(this);
+
+        if(this.getFirstRun()) {
+            //This is first run
+            this.setRunned();
+
+            // put entire first run commands here
+                // e.g. set nick name etc.
+            Intent prefs = new Intent(this, AppPreferences.class);
+            startActivity(prefs);
+            setRunned();
+        }
+
+        else{
+            // put usual start code stuff here
+
+            // ...
+
+        }
+
+    }
+
+    public boolean getFirstRun() {
+        return mPrefs.getBoolean("firstRun", true);
+    }
+
+    public void setRunned() {
+        SharedPreferences.Editor edit = mPrefs.edit();
+        edit.putBoolean("firstRun", false);
+        edit.commit();
     }
 
     public void onServerBtnClicked(View view) {
