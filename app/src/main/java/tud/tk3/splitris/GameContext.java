@@ -12,6 +12,7 @@ public class GameContext {
 
     public static void initServer(String nickname) throws IOException{
         Server = new Server(PORT, nickname);
+        Server.start();
     }
 
     public static void initClient() {
