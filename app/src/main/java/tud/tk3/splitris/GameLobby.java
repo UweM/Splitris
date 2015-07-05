@@ -68,19 +68,33 @@ public class GameLobby extends Activity {
     }
 
     public void oneLeftBtnClicked(View view) {
-        if(mSelectedItemId - 1 >= 0) {
-            Log.d(TAG, "left btn..., -1 id: " + mSelectedItemId);
+        Log.d(TAG, "left btn..., mSelectedItemid BEFORE: " + mSelectedItemId);
+        if(mSelectedItemId != 0) {
             Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId - 1);
-            //mMemberListView.setItemChecked(mSelectedItemId - 1, true);
             adapter.notifyDataSetChanged();
             mSelectedItemId--;
+            Log.d(TAG, "left btn..., mSelectedItemid AFTER: " + mSelectedItemId);
+        } else {
+            mMemberListView.requestFocusFromTouch();
+            mMemberListView.setSelection(mSelectedItemId);
+            adapter.notifyDataSetChanged();
         }
     }
 
     public void onRightBtnClicked(View view) {
-        //
+        if(mSelectedItemId < 3) {
+            Collections.swap(mGameMember, mSelectedItemId + 1, mSelectedItemId);
+            mMemberListView.requestFocusFromTouch();
+            mMemberListView.setSelection(mSelectedItemId  + 1);
+            adapter.notifyDataSetChanged();
+            mSelectedItemId++;
+        } else {
+            mMemberListView.requestFocusFromTouch();
+            mMemberListView.setSelection(mSelectedItemId);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
