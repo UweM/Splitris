@@ -20,8 +20,6 @@ import tud.tk3.splitscreen.screen.BlockScreen;
 import tud.tk3.splitscreen.output.ScreenView;
 import tud.tk3.splitscreen.output.Viewport;
 
-import tud.tk3.splitscreen.Util;
-
 public class MainActivity extends Activity {
 
     @Override
