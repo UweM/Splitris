@@ -2,8 +2,12 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,25 +17,35 @@ public class GameActivity extends Activity {
     private Button mLeft, mRight, mTurn, mDown;
     private final static String TAG = "GameActivity";
 
+    private GestureDetectorCompat myDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
+        myDetector = new GestureDetectorCompat(this,null);
     }
 
-    public void oneLeftBtnClicked(View view) {
+    public boolean onLeftBtnClicked(View view) {
+
+            return false;
+
+
         //
     }
 
-    public void onRightBtnClicked(View view) {
+    public boolean onRightBtnClicked(View view) {
+        return false;
         //
     }
 
-    public void onTurnBtnClicked(View view) {
+    public boolean onTurnBtnClicked(View view) {
+        return false;
         //
     }
 
-    public void onDownBtnClicked(View view) {
+    public boolean onDownBtnClicked(View view) {
+        return false;
         //
     }
 
@@ -57,4 +71,49 @@ public class GameActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+
+    private static final int SWIPE_THRESHOLD = 100;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+    private View myView;
+
+
+        public MyGestureListener(View v){
+            myView = v;
+        }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        boolean result = false;
+        try {
+            float diffY = e2.getY() - e1.getY();
+            float diffX = e2.getX() - e1.getX();
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX > 0) {
+                        result = onRightBtnClicked(myView);
+                    } else {
+                        result = onLeftBtnClicked(myView);
+                    }
+                } else {
+                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffY > 0) {
+                            result = onDownBtnClicked(myView);
+                        } else {
+                            result = onTurnBtnClicked(myView);
+                        }
+                    }
+                }
+                }
+            }catch(Exception exception){
+                exception.printStackTrace();
+            }
+            return result;
+        }
+    }
+
 }
+
