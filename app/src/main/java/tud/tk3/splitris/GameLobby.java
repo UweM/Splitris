@@ -2,11 +2,13 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +26,8 @@ public class GameLobby extends Activity {
     private final static String TAG = "GameLobby";
 
     private List<String> mGameMember = new ArrayList<>();
-    private int mSelectedItemId;
+    private int mSelectedItemId = -1;
+    private boolean mSelectedItemHightlighted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +47,21 @@ public class GameLobby extends Activity {
 
         memberListView.setAdapter(adapter);
 
+        memberListView.setSelector(R.color.material_blue_grey_800);
+        memberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+
         memberListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 //final String item = (String) parent.getItemAtPosition(position);
-
                 mSelectedItemId = position;
-
-                //mGameMember.remove(item);
 
                 Log.d(TAG, "item selected...");
 
                 adapter.notifyDataSetChanged();
-                view.setBackgroundColor(8);
-                view.setAlpha(1);
+
             }
 
         });
