@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Left"
-        android:id="@+id/button2"
+        android:id="@+id/left"
         android:onClick="oneLeftBtnClicked"
         android:layout_gravity="top|left|center" />
 
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Right"
-        android:id="@+id/button"
+        android:id="@+id/right"
         android:onClick="onRightBtnClicked"
         android:layout_gravity="top|left|center" />
 
