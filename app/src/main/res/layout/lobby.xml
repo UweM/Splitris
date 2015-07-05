@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Server"
-        android:id="@+id/button2"
+        android:id="@+id/sever"
         android:onClick="onServerBtnClicked"
         android:layout_gravity="top|left|center" />
 
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Client"
-        android:id="@+id/button"
+        android:id="@+id/client"
         android:onClick="onClientBtnClicked"
         android:layout_gravity="top|left|center" />
 
