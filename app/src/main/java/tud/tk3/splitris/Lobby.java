@@ -2,6 +2,7 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -65,5 +66,7 @@ public class Lobby extends Activity {
     }
     private void server() {
         Log.d(TAG, "Server started");
+        Intent gamelobby = new Intent(this, GameLobby.class);
+        startActivity(gamelobby);
     }
 }
