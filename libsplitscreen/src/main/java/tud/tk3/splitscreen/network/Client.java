@@ -1,5 +1,6 @@
 package tud.tk3.splitscreen.network;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -41,11 +42,25 @@ public class Client extends com.esotericsoftware.kryonet.Client {
             }
 
             @Override
-            public void onDiscoveredHost(DatagramPacket datagramPacket, Kryo kryo) {
+            public void onDiscoveredHost(final DatagramPacket datagramPacket, Kryo kryo) {
                 Log.d("Lobby", "recv len: " + datagramPacket.getData().length);
                 ByteBuffer buf = ByteBuffer.wrap(datagramPacket.getData(), 0, datagramPacket.getLength());
-                String nickname = Charset.forName("UTF-8").decode(buf).toString();
-                handler.onFound(datagramPacket.getAddress(), nickname);
+                final String nickname = Charset.forName("UTF-8").decode(buf).toString();
+
+                new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        handler.onFound(datagramPacket.getAddress(), nickname);
+                    }
+                }.execute();
+
+
             }
 
             @Override

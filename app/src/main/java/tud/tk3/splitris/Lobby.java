@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import tud.tk3.splitris.Tetris.AppPreferences;
 
@@ -21,6 +23,12 @@ import tud.tk3.splitscreen.network.DiscoveryHandler;
 
 public class Lobby extends Activity {
 
+    class AddrNickSet {
+        public String nick;
+        public InetAddress addr;
+        public String toString() { return nick; }
+    }
+
     private Button mServerBtn, mClientBtn;
     private final static String TAG = "Lobby";
     private String mIpAddr;
@@ -30,6 +38,7 @@ public class Lobby extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lobby);
+
         Context mContext = this.getApplicationContext();
         //0 = mode private. only this app can read these preferences
         mPrefs = mContext.getSharedPreferences("myAppPrefs", 0);
@@ -100,9 +109,16 @@ public class Lobby extends Activity {
 
     private void client() {
         GameContext.initClient();
+        ListView list = (ListView)findViewById(R.id.listofCurrentServerSessions);
+        final ArrayAdapter<AddrNickSet> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        list.setAdapter(adapter);
         GameContext.Client.discoverScreenServers(GameContext.PORT, new DiscoveryHandler() {
             @Override
             public void onFound(InetAddress address, String nickname) {
+                AddrNickSet item = new AddrNickSet();
+                item.nick = nickname;
+                item.addr = address;
+                adapter.add(item);
                 Log.d(TAG, "Found: " + nickname);
             }
         });
@@ -110,7 +126,6 @@ public class Lobby extends Activity {
 
     private void server() {
         Log.d(TAG, "Server started");
-
         try {
             GameContext.initServer("Nickname!!!");
         } catch (IOException e) {
