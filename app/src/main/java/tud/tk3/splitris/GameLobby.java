@@ -86,6 +86,10 @@ public class GameLobby extends Activity {
     }
 
     public void onUpBtnClicked(View view) {
+        if(mSelectedItemId == -1) {
+            return;
+        }
+
         if(mSelectedItemId != 0) {
             Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
             mAdapter.notifyDataSetChanged();
@@ -98,8 +102,11 @@ public class GameLobby extends Activity {
             mMemberListView.setSelection(mSelectedItemId);
         }
     }
-
     public void onDownBtnClicked(View view) {
+        if(mSelectedItemId == -1) {
+            return;
+        }
+
         if(mSelectedItemId < mGameMember.size() - 1) {
             Collections.swap(mGameMember, mSelectedItemId + 1, mSelectedItemId);
             mAdapter.notifyDataSetChanged();
