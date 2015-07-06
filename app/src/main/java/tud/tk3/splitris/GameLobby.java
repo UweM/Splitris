@@ -46,6 +46,8 @@ public class GameLobby extends Activity {
         mMemberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
 
         mGameMember.add(mOwnUserName);
+        mGameMember.add("asdf");
+        mGameMember.add("fdsa");
 
         adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, mGameMember);
@@ -83,32 +85,30 @@ public class GameLobby extends Activity {
     }
 
     public void oneLeftBtnClicked(View view) {
-        Log.d(TAG, "left btn..., mSelectedItemid BEFORE: " + mSelectedItemId);
         if(mSelectedItemId != 0) {
             Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
+            adapter.notifyDataSetChanged();
+
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId - 1);
-            adapter.notifyDataSetChanged();
             mSelectedItemId--;
-            Log.d(TAG, "left btn..., mSelectedItemid AFTER: " + mSelectedItemId);
-        } else {
+        } else if(mSelectedItemId != -1) {
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId);
-            adapter.notifyDataSetChanged();
         }
     }
 
     public void onRightBtnClicked(View view) {
-        if(mSelectedItemId < 3) {
+        if(mSelectedItemId < mGameMember.size() - 1) {
             Collections.swap(mGameMember, mSelectedItemId + 1, mSelectedItemId);
+            adapter.notifyDataSetChanged();
+
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId  + 1);
-            adapter.notifyDataSetChanged();
             mSelectedItemId++;
-        } else {
+        } else if(mSelectedItemId != -1) {
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId);
-            adapter.notifyDataSetChanged();
         }
     }
 
