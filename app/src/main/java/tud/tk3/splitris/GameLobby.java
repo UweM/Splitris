@@ -45,10 +45,7 @@ public class GameLobby extends Activity {
 
         mMemberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
 
-        mGameMember.add("member1");
-        mGameMember.add("member2");
-        mGameMember.add("member3");
-        mGameMember.add("member4");
+        mGameMember.add(mOwnUserName);
 
         adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, mGameMember);
