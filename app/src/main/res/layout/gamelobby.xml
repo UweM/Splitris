@@ -12,21 +12,32 @@
         android:layout_height="wrap_content"
         android:text="Please select a player from the list below and change the order of the players by pressing the Left or Right Buttons:" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Left"
-        android:id="@+id/left"
-        android:onClick="oneLeftBtnClicked"
-        android:layout_gravity="top|left|center" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Right"
-        android:id="@+id/right"
-        android:onClick="onRightBtnClicked"
-        android:layout_gravity="top|left|center" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Left"
+
+            android:id="@+id/left"
+            android:onClick="oneLeftBtnClicked" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/right"
+            android:onClick="onRightBtnClicked" />
+    </LinearLayout>
 
 
     <TextView

@@ -38,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Client"
+            android:layout_marginLeft="10dp"
             android:id="@+id/client"
             android:onClick="onClientBtnClicked" />
     </LinearLayout>
