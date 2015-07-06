@@ -29,7 +29,6 @@ public class Lobby extends Activity {
         public String toString() { return nick; }
     }
 
-    private Button mServerBtn, mClientBtn;
     private final static String TAG = "Lobby";
     private String mIpAddr;
     SharedPreferences mPrefs;
@@ -40,39 +39,12 @@ public class Lobby extends Activity {
         setContentView(R.layout.lobby);
 
         Context mContext = this.getApplicationContext();
+        
         //0 = mode private. only this app can read these preferences
         mPrefs = mContext.getSharedPreferences("myAppPrefs", 0);
 
         mIpAddr = Util.wifiIpAddress(this);
 
-        if(this.getFirstRun()) {
-            //This is first run
-            this.setRunned();
-
-            // put entire first run commands here
-                // e.g. set nick name etc.
-            Intent prefs = new Intent(this, AppPreferences.class);
-            startActivity(prefs);
-            setRunned();
-        }
-
-        else{
-            // put usual start code stuff here
-
-            // ...
-
-        }
-
-    }
-
-    public boolean getFirstRun() {
-        return mPrefs.getBoolean("firstRun", true);
-    }
-
-    public void setRunned() {
-        SharedPreferences.Editor edit = mPrefs.edit();
-        edit.putBoolean("firstRun", false);
-        edit.commit();
     }
 
     public void onServerBtnClicked(View view) {
