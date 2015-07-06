@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //client();
         server();
+        this.
     }
 
     @Override
@@ -60,6 +61,7 @@ public class MainActivity extends Activity {
                 try {
                     Client c = new Client();
                     c.registerView(0, (ScreenView)findViewById(R.id.splitscreen));
+
                     c.registerView(1, (ScreenView)findViewById(R.id.splitscreen2));
                     c.connect(5000, "192.168.178.36", 4562);
                     while(true) Thread.sleep(5000);
@@ -76,6 +78,7 @@ public class MainActivity extends Activity {
         final int height = 20;
         final BlockScreen bs = new BlockScreen(30, width, height);
         bs.setOccupied(Color.BLUE);
+
 
         final Viewport mirror = new Viewport(bs, 0, 0, bs.getVirtualWidth(), bs.getVirtualHeight());
         final Viewport vp1 =new Viewport(bs, 0, 0, bs.getVirtualWidth()/2, bs.getVirtualHeight());
