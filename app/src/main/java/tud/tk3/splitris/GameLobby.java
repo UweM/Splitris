@@ -2,6 +2,7 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +25,7 @@ public class GameLobby extends Activity {
 
     private final static String TAG = "GameLobby";
 
-    private List<Player> mGameMember = new ArrayList<>();
+    private ArrayList<Player> mGameMember = new ArrayList<>();
     private int mSelectedItemId = -1;
     private boolean mSelectedItemHightlighted = false;
     private ListView mMemberListView;
@@ -82,7 +83,10 @@ public class GameLobby extends Activity {
     }
 
     public void onStartButtonClicked(View view) {
+        GameContext.Players = mGameMember;
 
+        Intent gamelobby = new Intent(this, GameActivity.class);
+        startActivity(gamelobby);
     }
 
     public void oneLeftBtnClicked(View view) {

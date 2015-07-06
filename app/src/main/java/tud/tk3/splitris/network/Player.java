@@ -15,4 +15,8 @@ public class Player {
         return mNickname;
     }
     public String toString() { return mNickname; }
+
+    public ServerConnection getConnection() {
+        return mConnection;
+    }
 }

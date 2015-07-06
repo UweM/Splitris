@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import tud.tk3.splitris.tetris.Initiator;
+import tud.tk3.splitscreen.output.ScreenView;
+
 public class GameActivity extends Activity {
 
     private final static String TAG = "GameActivity";
@@ -21,7 +24,18 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
-        myDetector = new GestureDetectorCompat(this,null);
+        //myDetector = new GestureDetectorCompat(this,null);
+
+        ScreenView game = (ScreenView) findViewById(R.id.game_screen);
+        ScreenView info = (ScreenView) findViewById(R.id.info_screen);
+        if(GameContext.Client != null) {
+            GameContext.Client.registerView(0, game);
+            GameContext.Client.registerView(1, info);
+        }
+        else {
+            Initiator init = new Initiator();
+            init.configureBlockScreens(GameContext.Players, game);
+        }
     }
 
     public boolean onLeftBtnClicked(View view) {

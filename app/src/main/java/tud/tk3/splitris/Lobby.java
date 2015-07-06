@@ -58,7 +58,7 @@ public class Lobby extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // handle click on item in server list
                 final AddrNickSet set = mAdapter.getItem(position);
-                Toast.makeText(Lobby.this, "Connecting to " + set.nick, Toast.LENGTH_LONG).show();
+                Toast.makeText(Lobby.this, "Connecting to " + set.nick, Toast.LENGTH_SHORT).show();
                 // init client lib
                 GameContext.initClient();
                 new AsyncTask<Void, Void, Boolean>() {
@@ -80,10 +80,11 @@ public class Lobby extends Activity {
                     @Override
                     protected void onPostExecute(Boolean success) {
                         if(success) {
-                            Toast.makeText(Lobby.this, "Connected", Toast.LENGTH_LONG).show();
-                            // TODO: we are now connected. what now?
+                            Toast.makeText(Lobby.this, "Connected", Toast.LENGTH_SHORT).show();
+                            Intent gamelobby = new Intent(Lobby.this, GameActivity.class);
+                            startActivity(gamelobby);
                         } else {
-                            Toast.makeText(Lobby.this, "Could NOT connect to " + set.nick, Toast.LENGTH_LONG).show();
+                            Toast.makeText(Lobby.this, "Could NOT connect to " + set.nick, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }.execute();
