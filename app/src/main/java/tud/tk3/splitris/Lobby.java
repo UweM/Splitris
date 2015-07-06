@@ -18,6 +18,7 @@ import tud.tk3.splitris.Tetris.AppPreferences;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import tud.tk3.splitscreen.Util;
 import tud.tk3.splitscreen.network.DiscoveryHandler;
@@ -90,7 +91,16 @@ public class Lobby extends Activity {
                 AddrNickSet item = new AddrNickSet();
                 item.nick = nickname;
                 item.addr = address;
-                adapter.add(item);
+                InetAddress localHostAddr = null;
+                try {
+                    localHostAddr =InetAddress.getByName("127.0.0.1");
+                } catch(UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                if(localHostAddr != null && ! address.equals(localHostAddr)) {
+                    adapter.add(item);
+                }
+
                 Log.d(TAG, "Found: " + nickname);
             }
         });
