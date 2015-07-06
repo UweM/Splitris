@@ -97,15 +97,11 @@ public class Lobby extends Activity {
     }
 
     private void server() {
-        Log.d(TAG, "Server started");
-        try {
-            TextView userNameText = (TextView) findViewById(R.id.editUsername);
-            GameContext.initServer(userNameText.getText().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         Intent gamelobby = new Intent(this, GameLobby.class);
+
+        TextView userNameText = (TextView) findViewById(R.id.editUsername);
+        gamelobby.putExtra("USER_NAME", userNameText.getText().toString());
+
         startActivity(gamelobby);
     }
 }

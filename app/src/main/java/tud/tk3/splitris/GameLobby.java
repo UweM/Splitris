@@ -13,7 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class GameLobby extends Activity {
     private int mSelectedItemId = -1;
     private boolean mSelectedItemHightlighted = false;
     private ListView mMemberListView;
+    private String mOwnUserName;
 
     private StableArrayAdapter adapter;
 
@@ -35,6 +38,10 @@ public class GameLobby extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamelobby);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mOwnUserName = extras.getString("USER_NAME");
+        }
 
         mMemberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
 
@@ -65,6 +72,17 @@ public class GameLobby extends Activity {
             }
 
         });
+    }
+
+    public void onStartButtonClicked(View view) {
+
+        try {
+            GameContext.initServer(mOwnUserName);
+
+            Log.d(TAG, "Server started");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void oneLeftBtnClicked(View view) {
@@ -118,12 +136,6 @@ public class GameLobby extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onStartButtonClicked(View view) {
-        onStartGameBtnClicked();
-        Intent gameActivity = new Intent(this, GameActivity.class);
-        startActivity(gameActivity);
     }
 
 

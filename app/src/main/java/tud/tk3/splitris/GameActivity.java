@@ -13,8 +13,6 @@ import android.widget.Button;
 
 public class GameActivity extends Activity {
 
-
-    private Button mLeft, mRight, mTurn, mDown;
     private final static String TAG = "GameActivity";
 
     private GestureDetectorCompat myDetector;
@@ -27,10 +25,7 @@ public class GameActivity extends Activity {
     }
 
     public boolean onLeftBtnClicked(View view) {
-
-            return false;
-
-
+        return false;
         //
     }
 
