@@ -82,7 +82,7 @@ public class Lobby extends Activity {
                             Toast.makeText(Lobby.this, "Connected ", Toast.LENGTH_LONG).show();
                             // TODO: we are now connected. what now?
                         } else {
-                            Toast.makeText(Lobby.this, "Connecting to " + set.nick, Toast.LENGTH_LONG).show();
+                            Toast.makeText(Lobby.this, "Could NOT connect to " + set.nick, Toast.LENGTH_LONG).show();
                         }
                     }
                 }.execute();

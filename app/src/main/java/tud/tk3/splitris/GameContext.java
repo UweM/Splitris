@@ -2,11 +2,9 @@ package tud.tk3.splitris;
 
 import java.io.IOException;
 
-import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
 import tud.tk3.splitris.network.GameServer;
-import tud.tk3.splitris.Tetris.Game;
-import tud.tk3.splitscreen.network.Server;
+import tud.tk3.splitris.tetris.Game;
 import tud.tk3.splitscreen.network.Client;
 
 public class GameContext {
