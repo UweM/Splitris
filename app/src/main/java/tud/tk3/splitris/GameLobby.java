@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import tud.tk3.splitris.network.GameEventHandler;
+import tud.tk3.splitris.network.Player;
+
 public class GameLobby extends Activity {
 
     private final static String TAG = "GameLobby";
@@ -72,17 +75,19 @@ public class GameLobby extends Activity {
             }
 
         });
+
+        GameContext.Server.setGameEventHandler(new GameEventHandler() {
+               @Override
+               public void onNewPlayer(Player p) {
+                   // TODO
+                   Log.d(TAG, "New Player: " + p.getNickname());
+               }
+           }
+        );
     }
 
     public void onStartButtonClicked(View view) {
 
-        try {
-            GameContext.initServer(mOwnUserName);
-
-            Log.d(TAG, "Server started");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void oneLeftBtnClicked(View view) {

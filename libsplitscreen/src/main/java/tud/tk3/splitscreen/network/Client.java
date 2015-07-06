@@ -25,7 +25,11 @@ public class Client extends com.esotericsoftware.kryonet.Client {
     }
 
     public void registerView(int id, IScreenView v) {
-        mObjSpace.register(Network.SCREEN_BASE + id, v);
+        registerObject(Network.SCREEN_BASE + id, v);
+    }
+
+    public void registerObject(int id, Object o) {
+        mObjSpace.register(id, o);
     }
 
     public <T> T getRemoteObject (int objectID, Class<T> iface) {
