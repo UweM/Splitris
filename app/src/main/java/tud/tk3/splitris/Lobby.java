@@ -47,6 +47,7 @@ public class Lobby extends Activity {
         //0 = mode private. only this app can read these preferences
         mPrefs = mContext.getSharedPreferences("myAppPrefs", 0);
 
+        com.esotericsoftware.minlog.Log.TRACE = true;
 
         ListView list = (ListView)findViewById(R.id.listofCurrentServerSessions);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -65,11 +66,11 @@ public class Lobby extends Activity {
                     protected Boolean doInBackground(Void... params) {
                         try {
                             // connect to server and register with it
-                            GameContext.Client.connect(2000, set.addr, GameContext.PORT);
+                            GameContext.Client.connect(2000, set.addr, GameContext.PORT, GameContext.PORT);
                             // get remote gamecontroller instance and set it in our context
                             GameContext.Client.getEndPoint().getKryo().register(GameControllerInterface.class);
                             GameContext.Controller = GameContext.Client.getRemoteObject(GameContext.RMI_GAMECONTROLLER, GameControllerInterface.class);
-                            //GameContext.Controller.enterGame(getNickname());
+                            GameContext.Controller.enterGame(getNickname());
                         } catch (IOException e) {
                             e.printStackTrace();
                             return false;
@@ -79,7 +80,7 @@ public class Lobby extends Activity {
                     @Override
                     protected void onPostExecute(Boolean success) {
                         if(success) {
-                            Toast.makeText(Lobby.this, "Connected ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Lobby.this, "Connected", Toast.LENGTH_LONG).show();
                             // TODO: we are now connected. what now?
                         } else {
                             Toast.makeText(Lobby.this, "Could NOT connect to " + set.nick, Toast.LENGTH_LONG).show();
