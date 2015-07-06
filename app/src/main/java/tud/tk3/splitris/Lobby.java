@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import tud.tk3.splitris.Tetris.AppPreferences;
 
@@ -39,7 +40,6 @@ public class Lobby extends Activity {
         setContentView(R.layout.lobby);
 
         Context mContext = this.getApplicationContext();
-        
         //0 = mode private. only this app can read these preferences
         mPrefs = mContext.getSharedPreferences("myAppPrefs", 0);
 
@@ -99,7 +99,8 @@ public class Lobby extends Activity {
     private void server() {
         Log.d(TAG, "Server started");
         try {
-            GameContext.initServer("Nickname!!!");
+            TextView userNameText = (TextView) findViewById(R.id.editUsername);
+            GameContext.initServer(userNameText.getText().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

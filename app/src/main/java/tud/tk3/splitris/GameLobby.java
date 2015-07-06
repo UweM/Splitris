@@ -20,7 +20,6 @@ import java.util.List;
 
 public class GameLobby extends Activity {
 
-    private Button mLeft, mRight;
     private final static String TAG = "GameLobby";
 
     private List<String> mGameMember = new ArrayList<>();
