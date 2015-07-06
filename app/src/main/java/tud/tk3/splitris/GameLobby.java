@@ -2,6 +2,7 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -117,6 +118,12 @@ public class GameLobby extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onStartButtonClicked(View view) {
+        onStartGameBtnClicked();
+        Intent gameActivity = new Intent(this, GameActivity.class);
+        startActivity(gameActivity);
     }
 
 
