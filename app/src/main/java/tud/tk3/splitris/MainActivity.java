@@ -11,7 +11,7 @@ import com.esotericsoftware.kryonet.Listener;
 
 import java.io.IOException;
 
-import tud.tk3.splitris.Tetris.Game;
+import tud.tk3.splitris.tetris.Game;
 import tud.tk3.splitscreen.network.Client;
 import tud.tk3.splitscreen.network.Server;
 import tud.tk3.splitscreen.network.ServerConnection;
