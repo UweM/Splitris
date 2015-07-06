@@ -7,6 +7,15 @@ import tud.tk3.splitscreen.output.IScreenView;
 
 public class ServerConnection extends com.esotericsoftware.kryonet.Connection {
 
+
+    private ObjectSpace mObjSpace;
+
+    public void registerObject(int id, Object o) {
+        if(mObjSpace == null)
+            mObjSpace = new ObjectSpace(this);
+        mObjSpace.register(id, o);
+    }
+
     public IScreenView getRemoteView(int id) {
         IScreenView view = getRemoteObject(Network.SCREEN_BASE + id, IScreenView.class);
         ((RemoteObject)view).setNonBlocking(true);
@@ -17,5 +26,4 @@ public class ServerConnection extends com.esotericsoftware.kryonet.Connection {
     public <T> T getRemoteObject (int objectID, Class<T> iface) {
         return ObjectSpace.getRemoteObject(this, objectID, iface);
     }
-
 }
