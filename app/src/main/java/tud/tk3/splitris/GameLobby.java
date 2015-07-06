@@ -2,6 +2,7 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,11 +13,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import tud.tk3.splitris.network.GameEventHandler;
+import tud.tk3.splitris.network.Player;
 
 public class GameLobby extends Activity {
 
@@ -26,6 +32,7 @@ public class GameLobby extends Activity {
     private int mSelectedItemId = -1;
     private boolean mSelectedItemHightlighted = false;
     private ListView mMemberListView;
+    private String mOwnUserName;
 
     private StableArrayAdapter adapter;
 
@@ -34,13 +41,14 @@ public class GameLobby extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamelobby);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mOwnUserName = extras.getString("USER_NAME");
+        }
 
         mMemberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
 
-        mGameMember.add("member1");
-        mGameMember.add("member2");
-        mGameMember.add("member3");
-        mGameMember.add("member4");
+        mGameMember.add(mOwnUserName);
 
         adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, mGameMember);
@@ -64,35 +72,46 @@ public class GameLobby extends Activity {
             }
 
         });
+
+        GameContext.Server.setGameEventHandler(new GameEventHandler() {
+               @Override
+               public void onNewPlayer(Player p) {
+                   // TODO
+                   Log.d(TAG, "New Player: " + p.getNickname());
+               }
+           }
+        );
+    }
+
+    public void onStartButtonClicked(View view) {
+
     }
 
     public void oneLeftBtnClicked(View view) {
-        Log.d(TAG, "left btn..., mSelectedItemid BEFORE: " + mSelectedItemId);
         if(mSelectedItemId != 0) {
             Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
+            adapter.notifyDataSetChanged();
+
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId - 1);
-            adapter.notifyDataSetChanged();
             mSelectedItemId--;
-            Log.d(TAG, "left btn..., mSelectedItemid AFTER: " + mSelectedItemId);
-        } else {
+        } else if(mSelectedItemId != -1) {
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId);
-            adapter.notifyDataSetChanged();
         }
     }
 
     public void onRightBtnClicked(View view) {
-        if(mSelectedItemId < 3) {
+        if(mSelectedItemId < mGameMember.size() - 1) {
             Collections.swap(mGameMember, mSelectedItemId + 1, mSelectedItemId);
+            adapter.notifyDataSetChanged();
+
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId  + 1);
-            adapter.notifyDataSetChanged();
             mSelectedItemId++;
-        } else {
+        } else if(mSelectedItemId != -1) {
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId);
-            adapter.notifyDataSetChanged();
         }
     }
 

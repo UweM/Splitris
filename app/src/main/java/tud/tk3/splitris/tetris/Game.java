@@ -1,4 +1,4 @@
-package tud.tk3.splitris.Tetris;
+package tud.tk3.splitris.tetris;
 
 
 import java.util.Random;

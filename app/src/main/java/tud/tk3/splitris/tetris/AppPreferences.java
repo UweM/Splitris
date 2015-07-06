@@ -1,4 +1,4 @@
-package tud.tk3.splitris.Tetris;
+package tud.tk3.splitris.tetris;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
