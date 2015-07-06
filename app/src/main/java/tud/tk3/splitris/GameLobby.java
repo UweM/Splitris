@@ -2,7 +2,6 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,11 +10,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,13 +24,13 @@ public class GameLobby extends Activity {
 
     private final static String TAG = "GameLobby";
 
-    private List<String> mGameMember = new ArrayList<>();
+    private List<Player> mGameMember = new ArrayList<>();
     private int mSelectedItemId = -1;
     private boolean mSelectedItemHightlighted = false;
     private ListView mMemberListView;
     private String mOwnUserName;
 
-    private StableArrayAdapter adapter;
+    private StableArrayAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +44,13 @@ public class GameLobby extends Activity {
 
         mMemberListView = (ListView) findViewById(R.id.listofCurrentServerSessions);
 
-        mGameMember.add(mOwnUserName);
-
-        adapter = new StableArrayAdapter(this,
+        mAdapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, mGameMember);
 
-        mMemberListView.setAdapter(adapter);
+        mGameMember.add(new Player(null, mOwnUserName));
+        mAdapter.notifyDataSetChanged();
+
+        mMemberListView.setAdapter(mAdapter);
 
         mMemberListView.setSelector(R.color.material_blue_grey_800);
         mMemberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -67,7 +64,7 @@ public class GameLobby extends Activity {
                 mSelectedItemId = position;
 
                 Log.d(TAG, "item selected...");
-                //adapter.notifyDataSetChanged();
+                //mAdapter.notifyDataSetChanged();
 
             }
 
@@ -76,8 +73,9 @@ public class GameLobby extends Activity {
         GameContext.Server.setGameEventHandler(new GameEventHandler() {
                @Override
                public void onNewPlayer(Player p) {
-                   // TODO
                    Log.d(TAG, "New Player: " + p.getNickname());
+                   mGameMember.add(p);
+                   mAdapter.notifyDataSetChanged();
                }
            }
         );
@@ -90,7 +88,7 @@ public class GameLobby extends Activity {
     public void oneLeftBtnClicked(View view) {
         if(mSelectedItemId != 0) {
             Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
 
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId - 1);
@@ -104,7 +102,7 @@ public class GameLobby extends Activity {
     public void onRightBtnClicked(View view) {
         if(mSelectedItemId < mGameMember.size() - 1) {
             Collections.swap(mGameMember, mSelectedItemId + 1, mSelectedItemId);
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
 
             mMemberListView.requestFocusFromTouch();
             mMemberListView.setSelection(mSelectedItemId  + 1);
@@ -139,22 +137,19 @@ public class GameLobby extends Activity {
     }
 
 
-    private class StableArrayAdapter extends ArrayAdapter<String> {
+    private class StableArrayAdapter extends ArrayAdapter<Player> {
 
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
+        HashMap<Player, Integer> mIdMap = new HashMap<>();
+        List<Player> mList;
         public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
+                                  List<Player> objects) {
             super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
+            mList = objects;
         }
 
         @Override
         public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
+            return mIdMap.get(getItem(position));
         }
 
         @Override
@@ -162,5 +157,13 @@ public class GameLobby extends Activity {
             return true;
         }
 
+        @Override
+        public void notifyDataSetChanged() {
+            super.notifyDataSetChanged();
+            mIdMap.clear();
+            for (int i = 0; i < mList.size(); ++i) {
+                mIdMap.put(mList.get(i), i);
+            }
+        }
     }
 }

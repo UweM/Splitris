@@ -14,4 +14,5 @@ public class Player {
     public String getNickname() {
         return mNickname;
     }
+    public String toString() { return mNickname; }
 }

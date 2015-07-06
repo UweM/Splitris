@@ -9,9 +9,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 
-/**
- * Created by daniel on 7/5/15.
- */
+
 public class Util {
 
 
