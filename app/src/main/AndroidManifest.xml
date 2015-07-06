@@ -24,7 +24,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Tetris.AppPreferences"
+            android:name=".tetris.AppPreferences"
             android:screenOrientation="portrait" />
     </application>
 
