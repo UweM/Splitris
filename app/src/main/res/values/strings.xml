@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Splitris</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#29E342</color>
+    <color name="dark_green">#0FAB24</color>
+    <color name="black">#000000</color>
+    <color name="reddish">#75504D</color>
+    <color name="lightblue">#98CCF5</color>
+    <color name="darkerblue">#7EA3BF</color>
 </resources>

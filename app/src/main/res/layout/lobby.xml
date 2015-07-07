@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/lightblue"
     android:layout_weight="1">
 
     <TextView
@@ -18,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editUsername"
+        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
         android:hint="&lt;Nickname>" />
 
     <TextView
@@ -40,6 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Server"
             android:id="@+id/sever"
+            android:background="@color/green"
             android:onClick="onServerBtnClicked" />
 
         <Button
@@ -48,6 +51,7 @@
             android:text="Client"
             android:layout_marginLeft="10dp"
             android:id="@+id/client"
+            android:background="@color/green"
             android:onClick="onClientBtnClicked" />
     </LinearLayout>
 
