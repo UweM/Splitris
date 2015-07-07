@@ -14,12 +14,12 @@ public class Initiator {
 
     private final static int SCREEN_BLOCKWIDTH  = 15;
     private final static int SCREEN_BLOCKHEIGHT = 20;
-    private final static int SCREEN_BLOCKOVERLAP  = 2;
+    private final static int SCREEN_BLOCKOVERLAP  = 1;
     private final static int TETRIX_BLOCKLEN  = 20;
 
     public BlockScreen configureBlockScreens(ArrayList<Player> list, ScreenView localView) {
         final int height = SCREEN_BLOCKHEIGHT;
-        final int width = (list.size()-1) * (SCREEN_BLOCKWIDTH + 2 * SCREEN_BLOCKOVERLAP) + SCREEN_BLOCKWIDTH;
+        final int width = list.size() * SCREEN_BLOCKWIDTH;
         final BlockScreen bs = new BlockScreen(TETRIX_BLOCKLEN, width, height);
         bs.setOccupied(Color.BLUE);
 
@@ -43,11 +43,11 @@ public class Initiator {
             if(!last) vpwidth += overlapwidth;
 
             int vpleft = 0;
-            if(!first) vpleft = viewwidth + overlapwidth + (i-1) * (viewwidth + 2 * overlapwidth);
+            if(!first) vpleft = i * viewwidth - overlapwidth;
 
             Viewport vp = new Viewport(bs, vpleft, 0, vpwidth, viewheight);
 
-            HightlightFilter filter = new HightlightFilter(SCREEN_BLOCKOVERLAP * TETRIX_BLOCKLEN, !first, !last);
+            HightlightFilter filter = new HightlightFilter(overlapwidth, !first, !last);
             vp.addFilter(filter);
 
             if(p.getConnection() != null) {
