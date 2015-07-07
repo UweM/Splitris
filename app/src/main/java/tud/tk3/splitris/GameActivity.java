@@ -1,6 +1,7 @@
 package tud.tk3.splitris;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
@@ -54,7 +56,8 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                GameContext.Controller.moveLeft();
+                if(GameContext.Game.isGameRunning())
+                    GameContext.Controller.moveLeft();
                 return null;
             }
         }.execute();
@@ -67,7 +70,8 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                GameContext.Controller.moveRight();
+                if(GameContext.Game.isGameRunning())
+                    GameContext.Controller.moveRight();
                 return null;
             }
         }.execute();
@@ -80,7 +84,8 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                GameContext.Controller.rotate();
+                if(GameContext.Game.isGameRunning())
+                    GameContext.Controller.rotate();
                 return null;
             }
         }.execute();
@@ -93,7 +98,8 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                GameContext.Controller.moveDown();
+                if(GameContext.Game.isGameRunning())
+                    GameContext.Controller.moveDown();
                 return null;
             }
         }.execute();

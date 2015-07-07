@@ -27,6 +27,11 @@ public class Game {
         mNextItem = this.rnd.nextInt(ElementTemplate.COUNT);
     }
 
+    public Boolean isGameRunning()
+    {
+        return mGameRunning;
+    }
+
     public boolean tick() {
         if (!this.mActiveElement.moveDown()) {
             int MoveDown = 0;
