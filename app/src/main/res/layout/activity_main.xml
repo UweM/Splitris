@@ -12,6 +12,7 @@
         android:id="@+id/splitscreen"
         android:layout_gravity="center_horizontal" />
 
+    <!-- File outdated - do not use anymore -->
 
     <TextView
         android:layout_width="wrap_content"
