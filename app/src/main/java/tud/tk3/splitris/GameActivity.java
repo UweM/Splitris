@@ -3,6 +3,7 @@ package tud.tk3.splitris;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.tetris.Initiator;
 import tud.tk3.splitscreen.output.ScreenView;
 
@@ -35,25 +37,66 @@ public class GameActivity extends Activity {
         else {
             Initiator init = new Initiator();
             init.configureBlockScreens(GameContext.Players, game);
+            GameContext.Controller = new GameController(null, null);
         }
     }
 
     public boolean onLeftBtnClicked(View view) {
+
+        // We are on the client, we need to send the commands over NW
+        if(GameContext.Client != null) {
+            //TODO
+        }
+        // We are the server
+        else {
+            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
+            GameContext.Controller.moveLeft();
+        }
+
         return false;
         //
     }
 
     public boolean onRightBtnClicked(View view) {
+        // We are on the client, we need to send the commands over NW
+        if(GameContext.Client != null) {
+            //TODO
+        }
+        // We are the server
+        else {
+            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
+            GameContext.Controller.moveRight();
+        }
         return false;
         //
     }
 
     public boolean onTurnBtnClicked(View view) {
+        // We are on the client, we need to send the commands over NW
+        if(GameContext.Client != null) {
+            //TODO
+        }
+        // We are the server
+        else {
+            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
+            GameContext.Controller.rotate();
+        }
+
         return false;
         //
     }
 
     public boolean onDownBtnClicked(View view) {
+        // We are on the client, we need to send the commands over NW
+        if(GameContext.Client != null) {
+            //TODO
+        }
+        // We are the server
+        else {
+            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
+            GameContext.Controller.moveDown();
+        }
+
         return false;
         //
     }

@@ -34,7 +34,7 @@
             android:text="Left"
             android:id="@+id/left"
             android:layout_marginTop="150pt"
-            android:onClick="onServerBtnClicked"
+            android:onClick="onLeftBtnClicked"
             android:layout_column="0"
             android:layout_row="0"
             android:layout_gravity="left" />
@@ -45,7 +45,7 @@
             android:text="Right"
             android:id="@+id/right"
             android:layout_marginTop="150pt"
-            android:onClick="onClientBtnClicked"
+            android:onClick="onRightBtnClicked"
             android:layout_column="0"
             android:layout_row="0"
             android:layout_gravity="right" />
@@ -56,7 +56,7 @@
             android:text="Turn"
             android:id="@+id/turn"
             android:layout_marginTop="-40pt"
-            android:onClick="onServerBtnClicked"
+            android:onClick="onTurnBtnClicked"
             android:layout_column="0"
             android:layout_row="1"
             android:layout_gravity="left" />
@@ -67,7 +67,7 @@
             android:text="Down"
             android:id="@+id/down"
             android:layout_marginTop="-40pt"
-            android:onClick="onServerBtnClicked"
+            android:onClick="onDownBtnClicked"
             android:layout_column="0"
             android:layout_row="1"
             android:layout_gravity="right" />

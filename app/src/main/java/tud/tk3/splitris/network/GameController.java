@@ -1,6 +1,7 @@
 package tud.tk3.splitris.network;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import tud.tk3.splitris.GameContext;
 import tud.tk3.splitscreen.OnMainThread;
@@ -8,6 +9,9 @@ import tud.tk3.splitscreen.network.ServerConnection;
 
 // Server side: RMI interface to clients
 public class GameController implements GameControllerInterface {
+
+    private final static String TAG = "GameControllerInterface";
+
     private ServerConnection mConnection;
     private GameServer mSrv;
     private Player mPlayer;
