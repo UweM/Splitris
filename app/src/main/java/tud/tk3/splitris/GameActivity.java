@@ -66,7 +66,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onRightBtnClicked(View view) {
-        Log.d(TAG, "onLeftBtnClicked()");
+        Log.d(TAG, "onRightBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -80,7 +80,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onTurnBtnClicked(View view) {
-        Log.d(TAG, "onLeftBtnClicked()");
+        Log.d(TAG, "onTurnBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -94,7 +94,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onDownBtnClicked(View view) {
-        Log.d(TAG, "onLeftBtnClicked()");
+        Log.d(TAG, "onDownBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
