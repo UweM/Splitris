@@ -14,6 +14,7 @@ public class Player {
     public String getNickname() {
         return mNickname;
     }
+    public void setNickname(String nickname) {mNickname = nickname;}
     public String toString() { return mNickname; }
 
     public ServerConnection getConnection() {

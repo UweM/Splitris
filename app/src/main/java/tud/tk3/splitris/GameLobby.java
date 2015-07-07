@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import tud.tk3.splitris.network.GameEventHandler;
 import tud.tk3.splitris.network.Player;
@@ -59,8 +60,13 @@ public class GameLobby extends Activity {
         mMemberListView.setAdapter(mAdapter);
 
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-        int ip = wm.getConnectionInfo().getIpAddress();
+        int ip = 0;
+        ip = wm.getConnectionInfo().getIpAddress();
+        Random r = new Random();
+        int i1 = r.nextInt(80 - 65) + 65;
+        if (ip == 0) { ip = i1; }
         final String subset_ip = Integer.toString(ip).substring(Integer.toString(ip).length() - 3);
+        Log.d(TAG, "New Player:    " + subset_ip);
 
         mMemberListView.setSelector(R.color.material_blue_grey_800);
         mMemberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -83,7 +89,14 @@ public class GameLobby extends Activity {
         GameContext.Server.setGameEventHandler(new GameEventHandler() {
                @Override
                public void onNewPlayer(Player p) {
-                   Log.d(TAG, "New Player: " + p.getNickname() + subset_ip);
+                   if (mGameMember.equals(p.getNickname()))
+                   {
+                       p.setNickname(p.getNickname() + subset_ip);
+                       Log.d(TAG, "New Player: " + p.getNickname() + subset_ip);
+                   }
+                   else {
+                       Log.d(TAG, "New Player: " + p.getNickname());
+                   }
                    mGameMember.add(p);
                    mAdapter.notifyDataSetChanged();
                }
