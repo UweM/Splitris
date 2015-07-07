@@ -44,7 +44,7 @@ public class Lobby extends Activity {
         //0 = mode private. only this app can read these preferences
         mPrefs = mContext.getSharedPreferences("myAppPrefs", 0);
 
-        //com.esotericsoftware.minlog.Log.TRACE = true;
+        com.esotericsoftware.minlog.Log.TRACE = true;
 
         ListView list = (ListView)findViewById(R.id.listofCurrentServerSessions);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);

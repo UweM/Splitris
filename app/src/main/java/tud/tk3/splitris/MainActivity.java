@@ -116,14 +116,14 @@ public class MainActivity extends Activity {
                 }
 
                 try {
-                    Game tetris = new Game(bs, width, height);
+                    //Game tetris = new Game(bs, width, height);
 
                     boolean active = true;
                     while(true) {
                         for(int y=0;y<height;y++) {
                             for(int x=0;x<width;x++) {
                                 //bs.setActive(x, y, active);
-                                tetris.tick();
+                                //tetris.tick();
                                 bs.render();
                                 Thread.sleep(25);
                             }

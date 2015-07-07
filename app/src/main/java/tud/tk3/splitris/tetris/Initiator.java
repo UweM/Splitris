@@ -15,7 +15,7 @@ public class Initiator {
     private final static int SCREEN_BLOCKWIDTH  = 15;
     private final static int SCREEN_BLOCKHEIGHT = 20;
     private final static int SCREEN_BLOCKOVERLAP  = 1;
-    private final static int TETRIX_BLOCKLEN  = 20;
+    private final static int TETRIX_BLOCKLEN  = 1;
 
     public BlockScreen configureBlockScreens(ArrayList<Player> list, ScreenView localView) {
         final int height = SCREEN_BLOCKHEIGHT;

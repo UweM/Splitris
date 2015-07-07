@@ -29,8 +29,8 @@ public class GameContext {
         Client = new Client();
     }
 
-    public static void startGame(BlockScreen bs) {
-        Game = new Game(bs, bs.getWidth(), bs.getHeight());
+    public static void startGame(BlockScreen bs, BlockScreen preview) {
+        Game = new Game(bs, preview, bs.getWidth(), bs.getHeight());
 
         new Thread() {
             @Override

@@ -1,7 +1,7 @@
 package tud.tk3.splitris;
 
 import android.app.Activity;
-import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
+import tud.tk3.splitris.network.Player;
 import tud.tk3.splitris.tetris.Initiator;
+import tud.tk3.splitscreen.output.IScreenView;
 import tud.tk3.splitscreen.output.ScreenView;
+import tud.tk3.splitscreen.output.Viewport;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class GameActivity extends Activity implements GestureDetector.OnGestureListener {
@@ -44,11 +47,19 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
             init.configureBlockScreens(GameContext.Players, game);
             GameContext.Controller = new GameController(null, null);
             BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
-            GameContext.startGame(bs);
+            BlockScreen preview = new BlockScreen(1, 4, 4);
+            Viewport vp = new Viewport(preview, 0, 0, preview.getWidth(), preview.getHeight());
+            vp.addView(info);
+            for(Player p : GameContext.Players) {
+                if(p.getConnection() != null)
+                    vp.addView(p.getConnection().getRemoteView(1));
+            }
+            preview.setOccupied(Color.BLUE);
+            GameContext.startGame(bs, preview);
         }
 
 
-        gDetector = new GestureDetector(this);
+        gDetector = new GestureDetector(this, this);
     }
 
     public boolean onLeftBtnClicked(View view) {
@@ -56,7 +67,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                if(GameContext.Game.isGameRunning())
+                if(GameContext.Controller != null)
                     GameContext.Controller.moveLeft();
                 return null;
             }
@@ -70,7 +81,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                if(GameContext.Game.isGameRunning())
+                if(GameContext.Controller != null)
                     GameContext.Controller.moveRight();
                 return null;
             }
@@ -84,7 +95,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                if(GameContext.Game.isGameRunning())
+                if(GameContext.Controller != null)
                     GameContext.Controller.rotate();
                 return null;
             }
@@ -98,7 +109,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                if(GameContext.Game.isGameRunning())
+                if(GameContext.Controller != null)
                     GameContext.Controller.moveDown();
                 return null;
             }

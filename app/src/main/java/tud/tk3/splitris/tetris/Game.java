@@ -1,6 +1,8 @@
 package tud.tk3.splitris.tetris;
 
 
+import android.os.AsyncTask;
+
 import java.util.Random;
 
 import tud.tk3.splitscreen.screen.BlockScreen;
@@ -15,16 +17,25 @@ public class Game {
     private int mNextItem;
     private Random rnd;
     private BlockScreen mScreen;
+    private BlockScreen mPreview;
     private boolean mGameRunning = true;
 
-    public Game(BlockScreen screen, int width, int height) {
+    public Game(BlockScreen screen, BlockScreen preview, int width, int height) {
         mScreen = screen;
+        mPreview = preview;
         FIELD_WIDTH = width;
         FIELD_HEIGHT = height;
         mFields = new Cube[FIELD_WIDTH][FIELD_HEIGHT];
         rnd = new Random(System.currentTimeMillis());
-        mActiveElement = new Element(this, this.rnd.nextInt(ElementTemplate.COUNT));
-        mNextItem = this.rnd.nextInt(ElementTemplate.COUNT);
+        mActiveElement = new Element(this, rnd.nextInt(ElementTemplate.COUNT));
+        mNextItem = rnd.nextInt(ElementTemplate.COUNT);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                onNewElement();
+                return null;
+            }
+        }.execute();
     }
 
     public Boolean isGameRunning()
@@ -33,34 +44,51 @@ public class Game {
     }
 
     public boolean tick() {
-        if (!this.mActiveElement.moveDown()) {
-            int MoveDown = 0;
-            for (int y = 0; y < FIELD_HEIGHT; y++) {
-                boolean  ltest = true;
-                for (int x = 0; x < FIELD_WIDTH; x++) {
-                    if (this.mFields[x][y] == null) ltest = false;
-                    if (MoveDown > 0) this.setField(x, y - MoveDown, this.mFields[x][y]);
-                }
-
-                if (ltest) {
-                    MoveDown++;
-                }
-            }
-            //if (MoveDown > 0) Tetris.form.LinesComplete(MoveDown);
-            this.mActiveElement = new Element(this, this.mNextItem);
-            this.mNextItem = this.rnd.nextInt(ElementTemplate.COUNT);
-            //Tetris.form.NewElement();
+        if (!mActiveElement.moveDown()) {
+            onLineComplete();
         }
         mScreen.render();
         return mGameRunning;
     }
 
     public void fastTick(){
-        while(this.mActiveElement.moveDown());
+        while(mActiveElement.moveDown());
+        onLineComplete();
+        mScreen.render();
+    }
+
+    private void onNewElement() {
+        boolean[][] fields = ElementTemplate.getFields(mNextItem);
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                mPreview.setActive(x, 3 - y, fields[x][y]);
+            }
+        }
+        mPreview.render();
+    }
+
+    private void onLineComplete() {
+
+        int MoveDown = 0;
+        for (int y = 0; y < FIELD_HEIGHT; y++) {
+            boolean  ltest = true;
+            for (int x = 0; x < FIELD_WIDTH; x++) {
+                if (mFields[x][y] == null) ltest = false;
+                if (MoveDown > 0) setField(x, y - MoveDown, mFields[x][y]);
+            }
+
+            if (ltest) {
+                MoveDown++;
+            }
+        }
+        //if (MoveDown > 0) Tetris.form.LinesComplete(MoveDown);
+        mActiveElement = new Element(this, mNextItem);
+        mNextItem = rnd.nextInt(ElementTemplate.COUNT);
+        onNewElement();
     }
 
     public void setField(int x, int y, Cube cube) {
-        this.mFields[x][y] = cube;
+        mFields[x][y] = cube;
         mScreen.setActive(x, FIELD_HEIGHT-1-y, cube != null);
     }
 
@@ -73,21 +101,21 @@ public class Game {
     }
 
     public boolean moveX(boolean toLeft) {
-        boolean ret = this.mActiveElement.moveX(toLeft);
+        boolean ret = mActiveElement.moveX(toLeft);
         mScreen.render();
         return ret;
     }
 
     public boolean moveRight() {
-        return this.moveX(false);
+        return moveX(false);
     }
 
     public boolean moveLeft() {
-        return this.moveX(true);
+        return moveX(true);
     }
 
     public boolean rotate() {
-        boolean ret = this.mActiveElement.rotate();
+        boolean ret = mActiveElement.rotate();
         mScreen.render();
         return ret;
     }
