@@ -60,13 +60,6 @@ public class GameLobby extends Activity {
         mMemberListView.setAdapter(mAdapter);
 
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-        int ip = 0;
-        ip = wm.getConnectionInfo().getIpAddress();
-        Random r = new Random();
-        int i1 = r.nextInt(80 - 65) + 65;
-        if (ip == 0) { ip = i1; }
-        final String subset_ip = Integer.toString(ip).substring(Integer.toString(ip).length() - 3);
-        Log.d(TAG, "New Player:    " + subset_ip);
 
         mMemberListView.setSelector(R.color.material_blue_grey_800);
         mMemberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -89,14 +82,18 @@ public class GameLobby extends Activity {
         GameContext.Server.setGameEventHandler(new GameEventHandler() {
                @Override
                public void onNewPlayer(Player p) {
-                   if (mGameMember.equals(p.getNickname()))
-                   {
-                       p.setNickname(p.getNickname() + subset_ip);
-                       Log.d(TAG, "New Player: " + p.getNickname() + subset_ip);
+                   boolean found = false;
+                   for(Player other : mGameMember) {
+                       if(other.getNickname().equals(p.getNickname())) {
+                           found = true;
+                           break;
+                       }
                    }
-                   else {
-                       Log.d(TAG, "New Player: " + p.getNickname());
+                   if (found) {
+                       byte ip = p.getConnection().getRemoteAddressTCP().getAddress().getAddress()[3]; // get last segment of client ip
+                       p.setNickname(p.getNickname() + ip);
                    }
+                   Log.d(TAG, "New Player: " + p.getNickname());
                    mGameMember.add(p);
                    mAdapter.notifyDataSetChanged();
                }

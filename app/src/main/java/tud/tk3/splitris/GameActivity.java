@@ -3,15 +3,12 @@ package tud.tk3.splitris;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 
 import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
@@ -19,17 +16,20 @@ import tud.tk3.splitris.tetris.Initiator;
 import tud.tk3.splitscreen.output.ScreenView;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements GestureDetector.OnGestureListener {
 
     private final static String TAG = "GameActivity";
 
-    private GestureDetectorCompat myDetector;
+    private final static int swipe_Min_Distance = 100;
+    private final static int swipe_Max_Distance = 1000;
+    private final static int swipe_Min_Velocity = 50;
+    private GestureDetector gDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
-        //myDetector = new GestureDetectorCompat(this,null);
+        //gDetector = new GestureDetectorCompat(this,null);
 
         ScreenView game = (ScreenView) findViewById(R.id.game_screen);
         ScreenView info = (ScreenView) findViewById(R.id.info_screen);
@@ -44,6 +44,9 @@ public class GameActivity extends Activity {
             BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
             GameContext.startGame(bs);
         }
+
+
+        gDetector = new GestureDetector(this);
     }
 
     public boolean onLeftBtnClicked(View view) {
@@ -121,48 +124,72 @@ public class GameActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
 
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+    @Override
+    public void onShowPress(MotionEvent e) {
+    }
 
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
 
-    private static final int SWIPE_THRESHOLD = 100;
-    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-    private View myView;
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
 
+    @Override
+    public void onLongPress(MotionEvent e) {
+    }
 
-        public MyGestureListener(View v){
-            myView = v;
-        }
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+        return gDetector.onTouchEvent(me);
+    }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        boolean result = false;
-        try {
-            float diffY = e2.getY() - e1.getY();
-            float diffX = e2.getX() - e1.getX();
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffX > 0) {
-                        result = onRightBtnClicked(myView);
-                    } else {
-                        result = onLeftBtnClicked(myView);
-                    }
-                } else {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            result = onDownBtnClicked(myView);
-                        } else {
-                            result = onTurnBtnClicked(myView);
-                        }
-                    }
-                }
-                }
-            }catch(Exception exception){
-                exception.printStackTrace();
-            }
-            return result;
-        }
-    }
+        final float xDistance = Math.abs(e1.getX() - e2.getX());
+        final float yDistance = Math.abs(e1.getY() - e2.getY());
 
+        if(xDistance > swipe_Max_Distance || yDistance > swipe_Max_Distance)
+            return false;
+
+        velocityX = Math.abs(velocityX);
+        velocityY = Math.abs(velocityY);
+
+        //Log.d(TAG, "velocityX: " + velocityX + ", velocityY: " + velocityY);
+
+        if(velocityX > swipe_Min_Velocity && xDistance > swipe_Min_Distance){
+            if(e1.getX() > e2.getX()){ // right to left
+                Log.d(TAG, "left");
+                return onLeftBtnClicked(null);
+            }
+            else // left to right
+            {
+                Log.d(TAG, "right");
+                return onRightBtnClicked(null);
+            }
+        }
+        else if(velocityY > swipe_Min_Velocity && yDistance > swipe_Min_Distance){
+            if(e1.getY() > e2.getY()) // bottom to up
+            {
+                Log.d(TAG, "up");
+                return onTurnBtnClicked(null);
+            }
+            else // up to bottom
+            {
+                Log.d(TAG,"down");
+                return onDownBtnClicked(null);
+            }
+        }
+
+        return false;
+    }
 }
 
