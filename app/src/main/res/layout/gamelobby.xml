@@ -35,18 +35,18 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Left"
+            android:text="Up"
 
-            android:id="@+id/left"
-            android:onClick="oneLeftBtnClicked" />
+            android:id="@+id/up"
+            android:onClick="onUpBtnClicked" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Right"
+            android:text="Down"
             android:layout_marginLeft="10dp"
-            android:id="@+id/right"
-            android:onClick="onRightBtnClicked" />
+            android:id="@+id/down"
+            android:onClick="onDownBtnClicked" />
     </LinearLayout>
 
 

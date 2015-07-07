@@ -164,6 +164,11 @@ public class Lobby extends Activity {
 
     private String getNickname() {
         TextView userNameText = (TextView) findViewById(R.id.editUsername);
-        return userNameText.getText().toString();
+        String user = userNameText.getText().toString();
+        if(user.isEmpty()) {
+            return "Karl Gruber";
+        } else {
+            return user;
+        }
     }
 }

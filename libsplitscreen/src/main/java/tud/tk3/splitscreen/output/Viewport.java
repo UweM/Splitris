@@ -26,6 +26,7 @@ public class Viewport {
     }
 
     public void addFilter(IViewportFilter filter) {
+
         mFilters.add(filter);
     }
 
@@ -51,7 +52,7 @@ public class Viewport {
         Bitmap b = Bitmap.createBitmap(mScreen.getBitmap(), mLeft, mTop, mWidth, mHeight);
 
         for(IViewportFilter filter : mFilters) {
-            filter.apply(b);
+            filter.apply(b,true,true);
         }
 
         return b;
