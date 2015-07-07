@@ -59,8 +59,8 @@ public class GameLobby extends Activity {
         mMemberListView.setAdapter(mAdapter);
 
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        final String subset_ip = ip.substring(ip.length() - 3);
+        int ip = wm.getConnectionInfo().getIpAddress();
+        final String subset_ip = Integer.toString(ip).substring(Integer.toString(ip).length() - 3);
 
         mMemberListView.setSelector(R.color.material_blue_grey_800);
         mMemberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
