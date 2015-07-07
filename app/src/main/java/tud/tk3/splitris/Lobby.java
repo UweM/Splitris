@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -21,9 +20,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
-import tud.tk3.splitscreen.Util;
 import tud.tk3.splitscreen.network.DiscoveryHandler;
 
 public class Lobby extends Activity {
@@ -148,6 +145,7 @@ public class Lobby extends Activity {
     }
 
     private void server() {
+        GameContext.Client = null;
         Log.d(TAG, "Server started");
         try {
             GameContext.initServer(getNickname());

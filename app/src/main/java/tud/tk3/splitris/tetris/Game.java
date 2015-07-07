@@ -15,6 +15,7 @@ public class Game {
     private int mNextItem;
     private Random rnd;
     private BlockScreen mScreen;
+    private boolean mGameRunning = true;
 
     public Game(BlockScreen screen, int width, int height) {
         mScreen = screen;
@@ -26,7 +27,7 @@ public class Game {
         mNextItem = this.rnd.nextInt(ElementTemplate.COUNT);
     }
 
-    public void tick() {
+    public boolean tick() {
         if (!this.mActiveElement.moveDown()) {
             int MoveDown = 0;
             for (int y = 0; y < FIELD_HEIGHT; y++) {
@@ -45,11 +46,13 @@ public class Game {
             this.mNextItem = this.rnd.nextInt(ElementTemplate.COUNT);
             //Tetris.form.NewElement();
         }
+        mScreen.render();
+        return mGameRunning;
     }
 
     public void setField(int x, int y, Cube cube) {
         this.mFields[x][y] = cube;
-        mScreen.setActive(x, y, cube != null);
+        mScreen.setActive(x, FIELD_HEIGHT-1-y, cube != null);
     }
 
     public Cube getField(int x, int y) {
@@ -57,11 +60,13 @@ public class Game {
     }
 
     public void GameOver() {
-        //Tetris.form.GameOver();
+        mGameRunning = false;
     }
 
     public boolean moveX(boolean toLeft) {
-        return this.mActiveElement.moveX(toLeft);
+        boolean ret = this.mActiveElement.moveX(toLeft);
+        mScreen.render();
+        return ret;
     }
 
     public boolean moveRight() {
@@ -73,6 +78,8 @@ public class Game {
     }
 
     public boolean rotate() {
-        return this.mActiveElement.rotate();
+        boolean ret = this.mActiveElement.rotate();
+        mScreen.render();
+        return ret;
     }
 }

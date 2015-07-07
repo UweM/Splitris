@@ -8,6 +8,7 @@ import tud.tk3.splitris.network.GameServer;
 import tud.tk3.splitris.network.Player;
 import tud.tk3.splitris.tetris.Game;
 import tud.tk3.splitscreen.network.Client;
+import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class GameContext {
     public static int PORT = 45832;
@@ -26,5 +27,25 @@ public class GameContext {
 
     public static void initClient() {
         Client = new Client();
+    }
+
+    public static void startGame(BlockScreen bs) {
+        Game = new Game(bs, bs.getWidth(), bs.getHeight());
+
+        new Thread() {
+            @Override
+            public void run() {
+
+                try {
+
+                    while(true) {
+                        if(!Game.tick()) return;
+                        Thread.sleep(500);
+                    }
+
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }.start();
     }
 }

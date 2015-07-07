@@ -1,6 +1,7 @@
 package tud.tk3.splitris;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
@@ -13,8 +14,10 @@ import android.view.View;
 import android.widget.Button;
 
 import tud.tk3.splitris.network.GameController;
+import tud.tk3.splitris.network.GameControllerInterface;
 import tud.tk3.splitris.tetris.Initiator;
 import tud.tk3.splitscreen.output.ScreenView;
+import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class GameActivity extends Activity {
 
@@ -38,67 +41,61 @@ public class GameActivity extends Activity {
             Initiator init = new Initiator();
             init.configureBlockScreens(GameContext.Players, game);
             GameContext.Controller = new GameController(null, null);
+            BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
+            GameContext.startGame(bs);
         }
     }
 
     public boolean onLeftBtnClicked(View view) {
-
-        // We are on the client, we need to send the commands over NW
-        if(GameContext.Client != null) {
-            //TODO
-        }
-        // We are the server
-        else {
-            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
-            GameContext.Controller.moveLeft();
-        }
+        Log.d(TAG, "onLeftBtnClicked()");
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                GameContext.Controller.moveLeft();
+                return null;
+            }
+        }.execute();
 
         return false;
-        //
     }
 
     public boolean onRightBtnClicked(View view) {
-        // We are on the client, we need to send the commands over NW
-        if(GameContext.Client != null) {
-            //TODO
-        }
-        // We are the server
-        else {
-            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
-            GameContext.Controller.moveRight();
-        }
+        Log.d(TAG, "onLeftBtnClicked()");
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                GameContext.Controller.moveRight();
+                return null;
+            }
+        }.execute();
+
         return false;
-        //
     }
 
     public boolean onTurnBtnClicked(View view) {
-        // We are on the client, we need to send the commands over NW
-        if(GameContext.Client != null) {
-            //TODO
-        }
-        // We are the server
-        else {
-            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
-            GameContext.Controller.rotate();
-        }
+        Log.d(TAG, "onLeftBtnClicked()");
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                GameContext.Controller.rotate();
+                return null;
+            }
+        }.execute();
 
         return false;
-        //
     }
 
     public boolean onDownBtnClicked(View view) {
-        // We are on the client, we need to send the commands over NW
-        if(GameContext.Client != null) {
-            //TODO
-        }
-        // We are the server
-        else {
-            Log.d(TAG, "GameActivity: onLeftBtnClicked drin()");
-            GameContext.Controller.moveDown();
-        }
+        Log.d(TAG, "onLeftBtnClicked()");
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                GameContext.Controller.moveDown();
+                return null;
+            }
+        }.execute();
 
         return false;
-        //
     }
 
     @Override

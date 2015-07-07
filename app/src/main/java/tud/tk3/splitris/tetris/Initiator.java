@@ -2,10 +2,6 @@ package tud.tk3.splitris.tetris;
 
 import android.graphics.Color;
 
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import tud.tk3.splitris.network.Player;
@@ -16,7 +12,7 @@ import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class Initiator {
 
-    private final static int SCREEN_BLOCKWIDTH  = 10;
+    private final static int SCREEN_BLOCKWIDTH  = 15;
     private final static int SCREEN_BLOCKHEIGHT = 20;
     private final static int SCREEN_BLOCKOVERLAP  = 2;
     private final static int TETRIX_BLOCKLEN  = 20;
@@ -69,7 +65,7 @@ public class Initiator {
 
 
 
-        new Thread() {
+/*        new Thread() {
             @Override
             public void run() {
 
@@ -93,7 +89,7 @@ public class Initiator {
                 }
             }
         }.start();
-
+*/
         return bs;
     }
 }
