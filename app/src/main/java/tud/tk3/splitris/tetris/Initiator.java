@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import tud.tk3.splitris.network.Player;
+import tud.tk3.splitscreen.filter.HightlightFilter;
 import tud.tk3.splitscreen.output.ScreenView;
 import tud.tk3.splitscreen.output.Viewport;
 import tud.tk3.splitscreen.screen.BlockScreen;
@@ -40,7 +41,7 @@ public class Initiator {
             if(i == list.size() - 1) last = true;
 
             // calculate width of viewport.
-            // first ans last only have one overlap, all other have two
+            // first and last only have one overlap, all other have two
             int vpwidth = viewwidth;
             if(!first) vpwidth += overlapwidth;
             if(!last) vpwidth += overlapwidth;
@@ -50,14 +51,8 @@ public class Initiator {
 
             Viewport vp = new Viewport(bs, vpleft, 0, vpwidth, viewheight);
 
-            if(!first) {
-                // TODO:
-                // vp.addFilter([filter left]);
-            }
-            if(!last) {
-                // TODO:
-                // vp.addFilter([filter right]);
-            }
+            HightlightFilter filter = new HightlightFilter(SCREEN_BLOCKOVERLAP, !first, !last);
+            vp.addFilter(filter);
 
             if(p.getConnection() != null) {
                 vp.addView(p.getConnection().getRemoteView(0));

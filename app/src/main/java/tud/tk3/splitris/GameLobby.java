@@ -1,8 +1,10 @@
 package tud.tk3.splitris;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import tud.tk3.splitris.network.Player;
 
 public class GameLobby extends Activity {
 
+    private static final int SELECT_PICTURE = 1;
     private final static String TAG = "GameLobby";
 
     private ArrayList<Player> mGameMember = new ArrayList<>();
@@ -89,6 +92,36 @@ public class GameLobby extends Activity {
         startActivity(gamelobby);
     }
 
+
+    private void onDemoButtonClicked() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                ArrayList<Uri> list = new ArrayList<Uri>();
+                // only one selected?
+                if(data.getData() != null) {
+                    list.add(data.getData());
+                }
+                else { // multiple selected
+                    ClipData d = data.getClipData();
+                    for (int i = 0; i < d.getItemCount(); i++) {
+                        list.add(d.getItemAt(i).getUri());
+                    }
+                }
+                // TODO
+
+            }
+        }
+    }
+
     public void onUpBtnClicked(View view) {
         if(mSelectedItemId == -1) {
             return;
@@ -106,6 +139,7 @@ public class GameLobby extends Activity {
             mMemberListView.setSelection(mSelectedItemId);
         }
     }
+
     public void onDownBtnClicked(View view) {
         if(mSelectedItemId == -1) {
             return;

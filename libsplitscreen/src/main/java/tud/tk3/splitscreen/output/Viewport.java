@@ -52,7 +52,7 @@ public class Viewport {
         Bitmap b = Bitmap.createBitmap(mScreen.getBitmap(), mLeft, mTop, mWidth, mHeight);
 
         for(IViewportFilter filter : mFilters) {
-            filter.apply(b,true,true);
+            filter.apply(b);
         }
 
         return b;

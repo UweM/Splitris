@@ -3,5 +3,5 @@ package tud.tk3.splitscreen.filter;
 import android.graphics.Bitmap;
 
 public interface IViewportFilter {
-    void apply(Bitmap b, Boolean left, Boolean right);
+    void apply(Bitmap b);
 }

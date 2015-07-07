@@ -2,29 +2,34 @@ package tud.tk3.splitscreen.filter;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by fee on 7/6/15.
- */
-public class ViewportFilter implements IViewportFilter{
+
+public class HightlightFilter implements IViewportFilter{
+
+    private Boolean mAddLeft, mAddRight;
+    private int mHighlightWidth;
+    public HightlightFilter(int highlightWidth, Boolean addLeft, Boolean addRight) {
+        mHighlightWidth = highlightWidth;
+        mAddLeft = addLeft;
+        mAddRight = addRight;
+    }
 
     @Override
-    public void apply(Bitmap b, Boolean addLeft, Boolean addRight) {
+    public void apply(Bitmap b) {
 
         int mask = 0x00ff0000; //set all red color bits
-        int highlightWidth = b.getWidth()/15;
 
-        if(addLeft)
+        if(mAddLeft)
         {
-            for(int i=0; i<highlightWidth; ++i) {
+            for(int i=0; i<mHighlightWidth; ++i) {
                 for(int j=0; j<b.getHeight(); ++j){
                     setHighlight(b, i, j, mask);
                 }
             }
         }
 
-        if(addRight)
+        if(mAddRight)
         {
-            for(int i=b.getWidth()-highlightWidth; i<b.getWidth(); ++i) {
+            for(int i=b.getWidth()-mHighlightWidth; i<b.getWidth(); ++i) {
                 for(int j=0; j<b.getHeight(); ++j){
                     setHighlight(b, i, j, mask);
                 }
