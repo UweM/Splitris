@@ -47,7 +47,7 @@ public class Initiator {
 
             Viewport vp = new Viewport(bs, vpleft, 0, vpwidth, viewheight);
 
-            HightlightFilter filter = new HightlightFilter(SCREEN_BLOCKOVERLAP, !first, !last);
+            HightlightFilter filter = new HightlightFilter(SCREEN_BLOCKOVERLAP * TETRIX_BLOCKLEN, !first, !last);
             vp.addFilter(filter);
 
             if(p.getConnection() != null) {
