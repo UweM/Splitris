@@ -50,6 +50,10 @@ public class Game {
         return mGameRunning;
     }
 
+    public void fastTick(){
+        while(this.mActiveElement.moveDown());
+    }
+
     public void setField(int x, int y, Cube cube) {
         this.mFields[x][y] = cube;
         mScreen.setActive(x, FIELD_HEIGHT-1-y, cube != null);
