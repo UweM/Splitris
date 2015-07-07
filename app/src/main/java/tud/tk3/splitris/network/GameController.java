@@ -15,7 +15,7 @@ public class GameController implements GameControllerInterface {
     private ServerConnection mConnection;
     private GameServer mSrv;
     private Player mPlayer;
-    private boolean mCanControl;
+    private boolean mCanControl = true;
 
     public GameController(ServerConnection con, GameServer srv) {
 

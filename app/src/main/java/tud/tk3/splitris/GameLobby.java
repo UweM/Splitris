@@ -5,7 +5,9 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import tud.tk3.splitris.network.GameEventHandler;
 import tud.tk3.splitris.network.Player;
@@ -56,6 +59,8 @@ public class GameLobby extends Activity {
 
         mMemberListView.setAdapter(mAdapter);
 
+        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+
         mMemberListView.setSelector(R.color.material_blue_grey_800);
         mMemberListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
@@ -77,6 +82,17 @@ public class GameLobby extends Activity {
         GameContext.Server.setGameEventHandler(new GameEventHandler() {
                @Override
                public void onNewPlayer(Player p) {
+                   boolean found = false;
+                   for(Player other : mGameMember) {
+                       if(other.getNickname().equals(p.getNickname())) {
+                           found = true;
+                           break;
+                       }
+                   }
+                   if (found) {
+                       byte ip = p.getConnection().getRemoteAddressTCP().getAddress().getAddress()[3]; // get last segment of client ip
+                       p.setNickname(p.getNickname() + ip);
+                   }
                    Log.d(TAG, "New Player: " + p.getNickname());
                    mGameMember.add(p);
                    mAdapter.notifyDataSetChanged();
