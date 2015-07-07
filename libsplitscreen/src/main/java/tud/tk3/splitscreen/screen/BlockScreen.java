@@ -81,4 +81,12 @@ public class BlockScreen extends VirtualScreen {
     private void drawBlock(int x, int y) {
         drawBitmap(mBlocks[x][y] ? mOccupied : mVacant, x*mSidelength, y*mSidelength, mPaint);
     }
+
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
 }

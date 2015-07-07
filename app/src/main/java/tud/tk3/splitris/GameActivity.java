@@ -17,6 +17,7 @@ import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
 import tud.tk3.splitris.tetris.Initiator;
 import tud.tk3.splitscreen.output.ScreenView;
+import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class GameActivity extends Activity {
 
@@ -40,6 +41,8 @@ public class GameActivity extends Activity {
             Initiator init = new Initiator();
             init.configureBlockScreens(GameContext.Players, game);
             GameContext.Controller = new GameController(null, null);
+            BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
+            GameContext.startGame(bs);
         }
     }
 
