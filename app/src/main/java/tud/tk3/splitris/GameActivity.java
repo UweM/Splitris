@@ -180,7 +180,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
             if(e1.getY() > e2.getY()) // bottom to up
             {
                 Log.d(TAG, "up");
-                return onRightBtnClicked(null);
+                return onTurnBtnClicked(null);
             }
             else // up to bottom
             {
