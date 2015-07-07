@@ -50,7 +50,7 @@ public class GameController implements GameControllerInterface {
     }
 
     public void moveDown() {
-        if(mCanControl) GameContext.Game.tick();
+        if(mCanControl) GameContext.Game.fastTick();
     }
 
     public void rotate() {

@@ -27,6 +27,11 @@ public class Game {
         mNextItem = this.rnd.nextInt(ElementTemplate.COUNT);
     }
 
+    public Boolean isGameRunning()
+    {
+        return mGameRunning;
+    }
+
     public boolean tick() {
         if (!this.mActiveElement.moveDown()) {
             int MoveDown = 0;
@@ -48,6 +53,10 @@ public class Game {
         }
         mScreen.render();
         return mGameRunning;
+    }
+
+    public void fastTick(){
+        while(this.mActiveElement.moveDown());
     }
 
     public void setField(int x, int y, Cube cube) {
