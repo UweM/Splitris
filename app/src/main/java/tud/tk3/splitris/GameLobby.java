@@ -108,7 +108,6 @@ public class GameLobby extends Activity {
         startActivity(gamelobby);
     }
 
-
     public void onDemoButtonClicked(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -132,8 +131,8 @@ public class GameLobby extends Activity {
                         list.add(d.getItemAt(i).getUri());
                     }
                 }
-                // TODO
-
+                Log.d(TAG, "Number of Images selected: " + list.size());
+                //TODO
             }
         }
     }
