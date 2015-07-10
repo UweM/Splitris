@@ -39,6 +39,8 @@ public class Game {
         rnd = new Random(System.currentTimeMillis());
         mActiveElement = new Element(this, rnd.nextInt(ElementTemplate.COUNT));
         mNextItem = rnd.nextInt(ElementTemplate.COUNT);
+        //TODO CHEAT
+        mNextItem = 1;
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -81,6 +83,7 @@ public class Game {
         paint.setTextSize(10);
         paint.setStyle(Paint.Style.FILL);
 
+        mPreview.redraw();
         mPreview.drawText(Integer.toString(mPoints), 0, 23, paint);
         mPreview.render();
     }
