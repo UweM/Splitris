@@ -21,10 +21,15 @@ public class Game {
     private BlockScreen mPreview;
     private boolean mGameRunning = true;
     private int mMoveDown;
+    private int mPoints;
+    private int mlevel;
 
     public Game(BlockScreen screen, BlockScreen preview, int width, int height) {
         // main method for starting a new game
         mScreen = screen;
+        mPoints = 0;
+        mMoveDown = 0;
+        mlevel = 1;
         mPreview = preview;
         FIELD_WIDTH = width;
         FIELD_HEIGHT = height;
@@ -71,6 +76,28 @@ public class Game {
         mPreview.render();
     }
 
+    private void calculatePoints()
+    {
+        // calculate the achieved points for each game
+        // Rules: 40 * Level für eine volle Reihe, 100 * Level für zwei Reihen, 300 * Level für drei und 1200 * Level für vier Reihen.
+        if (mMoveDown == 1)
+        {
+            mPoints += 40 * mlevel ;
+        }
+        else if (mMoveDown == 2)
+        {
+            mPoints += 100 * mlevel ;
+        }
+        else if (mMoveDown == 3)
+        {
+            mPoints += 300 * mlevel ;
+        }
+        else if (mMoveDown >= 4)
+        {
+            mPoints += 1200 * mlevel ;
+        }
+    }
+
     private void onLineComplete() {
         // method to handle line completion
         int MoveDown = 0;
@@ -80,7 +107,6 @@ public class Game {
                 if (mFields[x][y] == null) ltest = false;
                 if (MoveDown > 0) setField(x, y - MoveDown, mFields[x][y]);
             }
-
             if (ltest) {
                 MoveDown++;
             }
@@ -88,7 +114,8 @@ public class Game {
         //if (MoveDown > 0) Tetris.form.LinesComplete(MoveDown);
         mActiveElement = new Element(this, mNextItem);
         mNextItem = rnd.nextInt(ElementTemplate.COUNT);
-        mMoveDown = MoveDown;
+        mMoveDown = MoveDown; // save completed rows
+        calculatePoints(); // after this points are actualized
         onNewElement();
     }
 
