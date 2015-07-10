@@ -1,6 +1,7 @@
 package tud.tk3.splitris.tetris;
 
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 
@@ -74,7 +75,13 @@ public class Game {
                 mPreview.setActive(x, 3 - y, fields[x][y]);
             }
         }
-        mPreview.drawText(Integer.toString(mPoints),10,10, new Paint());
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(10);
+        paint.setStyle(Paint.Style.FILL);
+
+        mPreview.drawText(Integer.toString(mPoints), 0, 15, paint);
         mPreview.render();
     }
 
@@ -123,7 +130,7 @@ public class Game {
 
     public void setField(int x, int y, Cube cube) {
         mFields[x][y] = cube;
-        mScreen.setActive(x, FIELD_HEIGHT-1-y, cube != null);
+        mScreen.setActive(x, FIELD_HEIGHT - 1 - y, cube != null);
     }
 
     public int getmMoveDown()
