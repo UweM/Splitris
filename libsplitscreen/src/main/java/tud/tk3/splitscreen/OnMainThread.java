@@ -3,6 +3,7 @@ package tud.tk3.splitscreen;
 import android.os.AsyncTask;
 
 public abstract class OnMainThread implements Runnable {
+    // abstract class implementing a runnable to be ran at a later stage as our main thread
     public OnMainThread() {
         new AsyncTask<Void, Void, Void>() {
 

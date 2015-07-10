@@ -11,13 +11,14 @@ import java.nio.ByteOrder;
 
 
 public class Util {
-
+    // util class to generally handle stuff - for now only the ip address resolution :)
 
     public static String wifiIpAddress(Context context) {
+        // handle ip address resolution
         WifiManager wifiManager = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
 
-        // Convert little-endian to big-endianif needed
+        // Convert little-endian to big-endian if needed
         if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
             ipAddress = Integer.reverseBytes(ipAddress);
         }
