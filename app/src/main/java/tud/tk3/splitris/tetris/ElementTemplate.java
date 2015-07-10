@@ -1,6 +1,7 @@
 package tud.tk3.splitris.tetris;
 
 public class ElementTemplate {
+    // template to define tetris elements
     public static int COUNT = 7;
 
     public static boolean[][] getFields(int index) {

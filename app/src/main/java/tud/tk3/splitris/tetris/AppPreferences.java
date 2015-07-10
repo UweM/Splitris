@@ -8,6 +8,7 @@ import java.util.List;
 import tud.tk3.splitris.R;
 
 public class AppPreferences extends PreferenceActivity {
+    // default class for handling the apps preferences
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

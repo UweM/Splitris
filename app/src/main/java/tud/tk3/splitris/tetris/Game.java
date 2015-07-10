@@ -8,6 +8,7 @@ import java.util.Random;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class Game {
+    // class to define a tetris game
 
     public static int FIELD_HEIGHT;
     public static int FIELD_WIDTH;
@@ -21,6 +22,7 @@ public class Game {
     private boolean mGameRunning = true;
 
     public Game(BlockScreen screen, BlockScreen preview, int width, int height) {
+        // main method for starting a new game
         mScreen = screen;
         mPreview = preview;
         FIELD_WIDTH = width;
@@ -44,6 +46,7 @@ public class Game {
     }
 
     public boolean tick() {
+        // method to handle one tick
         if (!mActiveElement.moveDown()) {
             onLineComplete();
         }
@@ -68,7 +71,7 @@ public class Game {
     }
 
     private void onLineComplete() {
-
+        // method to handle line completion
         int MoveDown = 0;
         for (int y = 0; y < FIELD_HEIGHT; y++) {
             boolean  ltest = true;

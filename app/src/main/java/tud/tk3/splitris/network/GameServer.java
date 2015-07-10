@@ -9,6 +9,7 @@ import tud.tk3.splitscreen.network.Server;
 import tud.tk3.splitscreen.network.ServerConnection;
 
 public class GameServer extends Server {
+    // class representing a game server (server connection + RMI stuff)
     private GameEventHandler mEventHandler;
     private ArrayList<ServerConnection> mConnections = new ArrayList<>();
 

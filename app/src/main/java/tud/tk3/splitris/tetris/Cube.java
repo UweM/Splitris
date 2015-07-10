@@ -1,6 +1,7 @@
 package tud.tk3.splitris.tetris;
 
 public class Cube {
+    // class defining a tetris cube
     public Element Parent;
     public int X = 0;
     public int Y = 0;

@@ -11,6 +11,7 @@ import tud.tk3.splitscreen.output.Viewport;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class Initiator {
+    // initiating class for the tetris game
 
     private final static int SCREEN_BLOCKWIDTH  = 15;
     private final static int SCREEN_BLOCKHEIGHT = 20;
@@ -58,12 +59,6 @@ public class Initiator {
 
             i++;
         }
-
-
-
-
-
-
 
 /*        new Thread() {
             @Override

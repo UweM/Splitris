@@ -3,6 +3,7 @@ package tud.tk3.splitris.network;
 import tud.tk3.splitscreen.network.ServerConnection;
 
 public class Player {
+    // class representing a player (nickname + ip address etc.)
     private ServerConnection mConnection;
     private String mNickname;
 
