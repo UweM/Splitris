@@ -13,6 +13,7 @@ import tud.tk3.splitscreen.screen.BlockScreen;
 import tud.tk3.splitscreen.screen.VirtualScreen;
 
 public class ImageContext {
+    // class for handling the image context
     public static Image Image;
     public static int PORT = 45832;
     public static GameServer Server;

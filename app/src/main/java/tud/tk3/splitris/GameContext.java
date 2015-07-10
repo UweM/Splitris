@@ -11,6 +11,7 @@ import tud.tk3.splitscreen.network.Client;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class GameContext {
+    // Main class for managing the game context
     public static int PORT = 45832;
     public static GameServer Server;
     public static Client Client;
@@ -21,15 +22,18 @@ public class GameContext {
     public static final int RMI_GAMECONTROLLER = 5;
 
     public static void initServer(String nickname) throws IOException{
+        // initiate the gameserver
         Server = new GameServer(PORT, nickname);
         Server.start();
     }
 
     public static void initClient() {
+        // initiate the client
         Client = new Client();
     }
 
     public static void startGame(BlockScreen bs, BlockScreen preview) {
+        // start the game (using an own thread)
         Game = new Game(bs, preview, bs.getWidth(), bs.getHeight());
 
         new Thread() {

@@ -9,6 +9,7 @@ import tud.tk3.splitscreen.network.ServerConnection;
 
 // Server side: RMI interface to clients
 public class GameController implements GameControllerInterface {
+    // class for handling the server side RMI interface to clients
 
     private final static String TAG = "GameControllerInterface";
 

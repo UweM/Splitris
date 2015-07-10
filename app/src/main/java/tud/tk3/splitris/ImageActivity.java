@@ -16,9 +16,11 @@ import tud.tk3.splitscreen.output.Viewport;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class ImageActivity extends Activity {
+    // class for handling the image activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // invoked when starting the activity - load all configurations
         super.onCreate(savedInstanceState);
         setContentView(R.layout.imageactivity);
 

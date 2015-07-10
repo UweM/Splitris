@@ -1,6 +1,7 @@
 package tud.tk3.splitris.tetris;
 
 public class Element {
+    // class defining an tetris element
 
     //grid of 4x4
     // +----+----+----+----+
