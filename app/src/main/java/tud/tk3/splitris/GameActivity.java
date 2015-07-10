@@ -51,7 +51,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
             Initiator init = new Initiator();
             GameContext.Controller = new GameController(null, null);
             BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
-            BlockScreen preview = new BlockScreen(1, 4, 4);
+            BlockScreen preview = new BlockScreen(2, 4, 4); // Pixel size of the block
             Viewport vp = new Viewport(preview, 0, 0, preview.getWidth(), preview.getHeight());
             vp.addView(info);
             for(Player p : GameContext.Players) {

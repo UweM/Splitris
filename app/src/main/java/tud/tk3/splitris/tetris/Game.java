@@ -1,6 +1,7 @@
 package tud.tk3.splitris.tetris;
 
 
+import android.graphics.Paint;
 import android.os.AsyncTask;
 
 import java.util.Random;
@@ -73,13 +74,14 @@ public class Game {
                 mPreview.setActive(x, 3 - y, fields[x][y]);
             }
         }
+        mPreview.drawText(Integer.toString(mPoints),10,10, new Paint());
         mPreview.render();
     }
 
     private void calculatePoints()
     {
         // calculate the achieved points for each game
-        // Rules: 40 * Level für eine volle Reihe, 100 * Level für zwei Reihen, 300 * Level für drei und 1200 * Level für vier Reihen.
+        // Rules: 40 * level for one complete row, 100 * level for two complete rows, 300 * level for three complete rows, 1200 * level for four complete rows.
         if (mMoveDown == 1)
         {
             mPoints += 40 * mlevel ;
