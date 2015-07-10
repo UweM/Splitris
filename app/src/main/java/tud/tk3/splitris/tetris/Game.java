@@ -81,7 +81,7 @@ public class Game {
         paint.setTextSize(10);
         paint.setStyle(Paint.Style.FILL);
 
-        mPreview.drawText(Integer.toString(mPoints), 0, 15, paint);
+        mPreview.drawText(Integer.toString(mPoints), 0, 23, paint);
         mPreview.render();
     }
 
