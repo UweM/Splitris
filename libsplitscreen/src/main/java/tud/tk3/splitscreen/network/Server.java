@@ -15,14 +15,14 @@ import java.nio.channels.DatagramChannel;
 import java.nio.charset.Charset;
 
 public class Server extends com.esotericsoftware.kryonet.Server {
-
+    // server class extending the kryonet class (see https://github.com/EsotericSoftware/kryonet)
 
     protected ServerConnection newConnection () {
         return new ServerConnection();
     }
 
-
     public Server(int port, final String nickname) throws IOException {
+        // method to start the server for a given port & nickname
         super();
         Network.register(this);
         bind(port, port);

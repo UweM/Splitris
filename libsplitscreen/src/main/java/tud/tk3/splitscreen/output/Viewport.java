@@ -9,6 +9,7 @@ import tud.tk3.splitscreen.screen.VirtualScreen;
 import tud.tk3.splitscreen.filter.IViewportFilter;
 
 public class Viewport {
+    // class for handling our viewport (+ low level bitmap rendering)
 
     private ArrayList<IViewportFilter> mFilters = new ArrayList<>();
     private ArrayList<IScreenView> mViews = new ArrayList<>();
@@ -17,6 +18,7 @@ public class Viewport {
     private Bitmap mLastBitmap;
 
     public Viewport(VirtualScreen screen, int left, int top, int width, int height) {
+        // create new viewport
         mScreen = screen;
         mLeft = left;
         mTop = top;
@@ -26,7 +28,7 @@ public class Viewport {
     }
 
     public void addFilter(IViewportFilter filter) {
-
+        // add the selected filter
         mFilters.add(filter);
     }
 
@@ -35,6 +37,7 @@ public class Viewport {
     }
 
     public void render() {
+        // rending method to render the bitmap
         Bitmap newBitmap = renderBitmap();
         if(!newBitmap.sameAs(mLastBitmap)) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -48,7 +51,7 @@ public class Viewport {
     }
 
     private Bitmap renderBitmap() {
-        // crop piece from screen bitmap
+        // actuall render bitmap & crop a piece from the screen bitmap
         Bitmap b = Bitmap.createBitmap(mScreen.getBitmap(), mLeft, mTop, mWidth, mHeight);
 
         for(IViewportFilter filter : mFilters) {

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class ScreenView extends View implements IScreenView {
+    // class for handling our screen view (+ canvas drawing)
     private Bitmap mBitmap;
     private Paint mPaint = new Paint();
 
@@ -24,6 +25,7 @@ public class ScreenView extends View implements IScreenView {
     }
 
     public void setBitmap(final byte[] bytes) {
+        // perform the bitmap operations
         new AsyncTask<Void, Void, Bitmap>() {
 
             @Override
@@ -41,6 +43,7 @@ public class ScreenView extends View implements IScreenView {
 
     @Override
     public void onDraw(Canvas canvas) {
+        // perform actual drawing onto the canvas
         if(mBitmap != null) {
             canvas.scale((float)getWidth() / (float)mBitmap.getWidth(), (float)getHeight() / (float)mBitmap.getHeight());
             canvas.drawBitmap(mBitmap, 0, 0, mPaint);
