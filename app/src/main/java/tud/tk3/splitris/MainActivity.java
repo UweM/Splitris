@@ -20,6 +20,7 @@ import tud.tk3.splitscreen.output.ScreenView;
 import tud.tk3.splitscreen.output.Viewport;
 
 public class MainActivity extends Activity {
+    // Main activity for testing purposes :)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class MainActivity extends Activity {
     }
 
     private void client() {
+        // client test code
 
         new Thread() {
             @Override
@@ -71,7 +73,7 @@ public class MainActivity extends Activity {
 
     }
     private void server() {
-
+        // server test code
         final int width = 40;
         final int height = 20;
         final BlockScreen bs = new BlockScreen(30, width, height);
@@ -94,6 +96,7 @@ public class MainActivity extends Activity {
         new Thread() {
             @Override
             public void run() {
+                // main thread running in background
 
 
                 Server s;

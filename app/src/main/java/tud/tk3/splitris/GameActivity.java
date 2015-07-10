@@ -22,6 +22,8 @@ import tud.tk3.splitscreen.output.Viewport;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class GameActivity extends Activity implements GestureDetector.OnGestureListener {
+    // game activity class - activity containing the main code for the game
+    // game is displayed in this class - swiping code is handled here
 
     private final static String TAG = "GameActivity";
 
@@ -32,18 +34,20 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // onCreate method invoked when starting the game
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
 
+        // include both ScreenViews -> one for displaying the game & one for displaing the info screen
         ScreenView game = (ScreenView) findViewById(R.id.game_screen);
         ScreenView info = (ScreenView) findViewById(R.id.info_screen);
-        //We are at the Client
         if(GameContext.Client != null) {
+        //We are at the Client
             GameContext.Client.registerView(0, game);
             GameContext.Client.registerView(1, info);
         }
-        //We are at the Server
         else {
+            //We are at the Server
             Initiator init = new Initiator();
             GameContext.Controller = new GameController(null, null);
             BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
@@ -63,6 +67,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onLeftBtnClicked(View view) {
+        // Method for handling the left clicks & swipes
         Log.d(TAG, "onLeftBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -77,6 +82,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onRightBtnClicked(View view) {
+        // Method for handling the right clicks & swipes
         Log.d(TAG, "onRightBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -91,6 +97,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onTurnBtnClicked(View view) {
+        // Method for handling the turing of the blocks
         Log.d(TAG, "onTurnBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -105,6 +112,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     }
 
     public boolean onDownBtnClicked(View view) {
+        // Method for handling the down clicks & swipes
         Log.d(TAG, "onDownBtnClicked()");
         new AsyncTask<Void, Void, Void>() {
             @Override
