@@ -26,6 +26,10 @@ public class VirtualScreen extends Canvas {
         return mBitmap;
     }
 
+    public void setBitmap(Bitmap b) {
+        mBitmap = b;
+    }
+
     public void redraw() {
         createBitmap();
     }
