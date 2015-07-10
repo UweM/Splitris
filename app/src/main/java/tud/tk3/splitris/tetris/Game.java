@@ -20,6 +20,7 @@ public class Game {
     private BlockScreen mScreen;
     private BlockScreen mPreview;
     private boolean mGameRunning = true;
+    private int mMoveDown;
 
     public Game(BlockScreen screen, BlockScreen preview, int width, int height) {
         // main method for starting a new game
@@ -87,12 +88,18 @@ public class Game {
         //if (MoveDown > 0) Tetris.form.LinesComplete(MoveDown);
         mActiveElement = new Element(this, mNextItem);
         mNextItem = rnd.nextInt(ElementTemplate.COUNT);
+        mMoveDown = MoveDown;
         onNewElement();
     }
 
     public void setField(int x, int y, Cube cube) {
         mFields[x][y] = cube;
         mScreen.setActive(x, FIELD_HEIGHT-1-y, cube != null);
+    }
+
+    public int getmMoveDown()
+    {
+        return mMoveDown;
     }
 
     public Cube getField(int x, int y) {
