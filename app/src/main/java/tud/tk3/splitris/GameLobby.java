@@ -109,7 +109,7 @@ public class GameLobby extends Activity {
     }
 
 
-    private void onDemoButtonClicked() {
+    public void onDemoButtonClicked(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
