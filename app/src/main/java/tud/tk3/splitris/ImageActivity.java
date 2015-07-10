@@ -16,7 +16,7 @@ public class ImageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameactivity);
+        setContentView(R.layout.imageactivity);
 
         ScreenView image_screen = (ScreenView) findViewById(R.id.image_screen);
 
