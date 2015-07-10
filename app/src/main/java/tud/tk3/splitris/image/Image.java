@@ -1,12 +1,13 @@
 package tud.tk3.splitris.image;
 
 import tud.tk3.splitscreen.screen.BlockScreen;
+import tud.tk3.splitscreen.screen.VirtualScreen;
 
 public class Image {
-    private BlockScreen mScreen;
+    private VirtualScreen mScreen;
 
-    public Image(BlockScreen bs) {
-        mScreen = bs;
+    public Image(VirtualScreen vs) {
+        mScreen = vs;
     }
 
     public void render() {

@@ -2,6 +2,7 @@ package tud.tk3.splitris;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import java.io.IOError;
@@ -23,6 +24,11 @@ public class ImageActivity extends Activity {
 
         ScreenView image_screen = (ScreenView) findViewById(R.id.image_screen);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Uri selected_image = Uri.parse(extras.getString("SELECTED_IMAGE"));
+        }
+
         //We are at the Client
         if(ImageContext.Client != null) {
             ImageContext.Client.registerView(0, image_screen);
@@ -38,8 +44,10 @@ public class ImageActivity extends Activity {
             }
 
             Initiator init = new Initiator();
-            BlockScreen bs = init.configureBlockScreens(ImageContext.Contributers, image_screen);
-            ImageContext.startDisplay(bs);
+            //BlockScreen bs = init.configureBlockScreens(ImageContext.Contributers, image_screen);
+            //TODO generate ViewScreen
+
+            //ImageContext.startDisplay(bs);
         }
     }
 }

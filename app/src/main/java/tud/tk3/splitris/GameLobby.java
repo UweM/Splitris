@@ -133,7 +133,12 @@ public class GameLobby extends Activity {
                     }
                 }
                 Log.d(TAG, "Number of Images selected: " + list.size());
-                //TODO
+
+                Intent imageactivity = new Intent(this, ImageActivity.class);
+
+                imageactivity.putExtra("SELECTED_IMAGE", list.get(0).toString());
+
+                startActivity(imageactivity);
             }
         }
     }
