@@ -28,6 +28,8 @@ import tud.tk3.splitris.network.GameEventHandler;
 import tud.tk3.splitris.network.Player;
 
 public class GameLobby extends Activity {
+    // Main class for handling active games
+    // second activity displayed to the user after joining a specific game session on the server
 
     private static final int SELECT_PICTURE = 1;
     private final static String TAG = "GameLobby";
@@ -42,8 +44,11 @@ public class GameLobby extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // onCreate method invoked when starting the activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamelobby);
+
+        // set all variables & initiate all lists
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -60,6 +65,7 @@ public class GameLobby extends Activity {
 
         mMemberListView.setAdapter(mAdapter);
 
+        // necessary to get ip address & port
         WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
 
         mMemberListView.setSelector(R.color.material_blue_grey_800);
@@ -77,12 +83,12 @@ public class GameLobby extends Activity {
                 //mAdapter.notifyDataSetChanged();
 
             }
-
         });
 
         GameContext.Server.setGameEventHandler(new GameEventHandler() {
                @Override
                public void onNewPlayer(Player p) {
+                   // handling a newly added player (set name + config etc.)
                    boolean found = false;
                    for(Player other : mGameMember) {
                        if(other.getNickname().equals(p.getNickname())) {
@@ -104,12 +110,13 @@ public class GameLobby extends Activity {
 
     public void onStartButtonClicked(View view) {
         GameContext.Players = mGameMember;
-
+        // Start the Splitris game in a new activity
         Intent gamelobby = new Intent(this, GameActivity.class);
         startActivity(gamelobby);
     }
 
     public void onDemoButtonClicked(View view) {
+        // start the picture demo in a new activity
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -119,6 +126,7 @@ public class GameLobby extends Activity {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // handle the choosing of an image for picture demo activity
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 ArrayList<Uri> list = new ArrayList<Uri>();
@@ -139,10 +147,10 @@ public class GameLobby extends Activity {
     }
 
     public void onUpBtnClicked(View view) {
+        // handle changes to the list of active users in the session displayed to the user
         if(mSelectedItemId == -1) {
             return;
         }
-
         if(mSelectedItemId != 0) {
             Collections.swap(mGameMember, mSelectedItemId - 1, mSelectedItemId);
             mAdapter.notifyDataSetChanged();
@@ -157,6 +165,7 @@ public class GameLobby extends Activity {
     }
 
     public void onDownBtnClicked(View view) {
+        // handle changes to the list of active users in the session displayed to the user
         if(mSelectedItemId == -1) {
             return;
         }
