@@ -12,6 +12,7 @@ import tud.tk3.splitscreen.network.Client;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class ImageContext {
+    // class for handling the image context
     public static Image Image;
     public static int PORT = 45832;
     public static GameServer Server;
