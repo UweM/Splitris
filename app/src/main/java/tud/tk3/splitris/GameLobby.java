@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import tud.tk3.splitris.image.Image;
 import tud.tk3.splitris.network.GameEventHandler;
 import tud.tk3.splitris.network.Player;
 
@@ -109,6 +110,9 @@ public class GameLobby extends Activity {
     }
 
     public void onDemoButtonClicked(View view) {
+        ImageContext.initServer();
+        ImageContext.initClient();
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);

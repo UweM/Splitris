@@ -8,4 +8,8 @@ public class Image {
     public Image(BlockScreen bs) {
         mScreen = bs;
     }
+
+    public void render() {
+        mScreen.render();
+    }
 }

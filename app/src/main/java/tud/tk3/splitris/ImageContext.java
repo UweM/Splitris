@@ -1,5 +1,7 @@
 package tud.tk3.splitris;
 
+import android.os.AsyncTask;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,26 +21,23 @@ public class ImageContext {
     public static void startDisplay(BlockScreen bs) {
         Image = new Image(bs);
 
-        new Thread() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
-            public void run() {
-
-                try {
-
-                    //TODO
-
-                } catch (InterruptedException ignored) {
-                }
+            protected Void doInBackground(Void... params) {
+                Image.render();
+                return null;
             }
-        }.start();
+
+        }.execute();
     }
 
     public static void initClient() {
         Client = new Client();
     }
 
-    public static void initServer(String nickname) throws IOException {
-        Server = new GameServer(PORT, nickname);
-        Server.start();
+    public static void initServer() {
+        //TODO
+        //Server = new GameServer(PORT, "");
+        //Server.start();
     }
 }
