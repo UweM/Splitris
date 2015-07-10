@@ -24,8 +24,11 @@ import tud.tk3.splitris.network.GameControllerInterface;
 import tud.tk3.splitscreen.network.DiscoveryHandler;
 
 public class Lobby extends Activity {
+    // Main class called lobby - first activity the user is displayed
+    // choose whether you want to act as a server or a client - connect to available servers
 
     class AddrNickSet {
+        // enclosing class for nickname & address
         public String nick;
         public InetAddress addr;
         public String toString() { return nick; }
@@ -37,6 +40,7 @@ public class Lobby extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // onCreate method invoked when starting the app
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lobby);
 
@@ -46,6 +50,7 @@ public class Lobby extends Activity {
 
         //com.esotericsoftware.minlog.Log.TRACE = true;
 
+        // ListView listing all the available servers on the network
         ListView list = (ListView)findViewById(R.id.listofCurrentServerSessions);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         list.setAdapter(mAdapter);
@@ -61,6 +66,7 @@ public class Lobby extends Activity {
                 new AsyncTask<Void, Void, Boolean>() {
                     @Override
                     protected Boolean doInBackground(Void... params) {
+                        // Background task for connecting to the server
                         try {
                             // connect to server and register with it
                             GameContext.Client.connect(2000, set.addr, GameContext.PORT, GameContext.PORT);
@@ -90,11 +96,11 @@ public class Lobby extends Activity {
     }
 
     public void onServerBtnClicked(View view) {
-        server();
+        server(); // start server
     }
 
     public void onClientBtnClicked(View view) {
-        client();
+        client(); // start client
     }
 
     @Override
@@ -115,13 +121,13 @@ public class Lobby extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
 
 
     private void client() {
+        // initiate client code & load client nickname and ip address
         GameContext.initClient();
         mAdapter.clear();
         GameContext.Client.discoverScreenServers(GameContext.PORT, new DiscoveryHandler() {
@@ -145,6 +151,7 @@ public class Lobby extends Activity {
     }
 
     private void server() {
+        // initiate server code
         GameContext.Client = null;
         Log.d(TAG, "Server started");
         try {
@@ -161,6 +168,7 @@ public class Lobby extends Activity {
     }
 
     private String getNickname() {
+        // handle the usernames
         TextView userNameText = (TextView) findViewById(R.id.editUsername);
         String user = userNameText.getText().toString();
         if(user.isEmpty()) {
