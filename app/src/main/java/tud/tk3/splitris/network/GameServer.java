@@ -11,7 +11,7 @@ import tud.tk3.splitscreen.network.ServerConnection;
 public class GameServer extends Server {
     // class representing a game server (server connection + RMI stuff)
     private GameEventHandler mEventHandler;
-    private ArrayList<ServerConnection> mConnections = new ArrayList<>();
+    private ArrayList<GameController> mControllers = new ArrayList<>();
 
     public GameServer(int port, String nickname) throws IOException {
         super(port, nickname);
@@ -21,8 +21,9 @@ public class GameServer extends Server {
 
     protected ServerConnection newConnection () {
         ServerConnection con = super.newConnection();
-        con.registerObject(GameContext.RMI_GAMECONTROLLER, new GameController(con, this));
-        mConnections.add(con);
+        GameController ctrl = new GameController(con, this);
+        con.registerObject(GameContext.RMI_GAMECONTROLLER, ctrl);
+        mControllers.add(ctrl);
         return con;
     }
 
@@ -32,5 +33,9 @@ public class GameServer extends Server {
 
     public GameEventHandler getGameEventHandler() {
         return mEventHandler;
+    }
+
+    public ArrayList<GameController> getGameControllers() {
+        return mControllers;
     }
 }

@@ -129,24 +129,25 @@ public class GameLobby extends Activity {
         // handle the choosing of an image for picture demo activity
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
-                ArrayList<Uri> list = new ArrayList<Uri>();
+                ArrayList<String> list = new ArrayList<>();
                 // only one selected?
                 if(data.getData() != null) {
-                    list.add(data.getData());
+                    list.add(data.getData().toString());
                 }
                 else { // multiple selected
                     ClipData d = data.getClipData();
                     for (int i = 0; i < d.getItemCount(); i++) {
-                        list.add(d.getItemAt(i).getUri());
+                        list.add(d.getItemAt(i).getUri().toString());
                     }
                 }
                 Log.d(TAG, "Number of Images selected: " + list.size());
 
-                Intent imageactivity = new Intent(this, ImageActivity.class);
+                Intent gamelobby = new Intent(this, GameActivity.class);
 
-                imageactivity.putExtra("SELECTED_IMAGE", list.get(0).toString());
+                gamelobby.putExtra("SELECTED_IMAGES", list.toArray(new String[list.size()]));
 
-                startActivity(imageactivity);
+                GameContext.Players = mGameMember;
+                startActivity(gamelobby);
             }
         }
     }

@@ -20,7 +20,7 @@ public class Client extends com.esotericsoftware.kryonet.Client {
 
     public Client() {
         // method to start the server for a given port & nickname
-        super();
+        super(5*1024*1024, 1024*1024);
         super.start();
         Network.register(this);
         mObjSpace = new ObjectSpace(this);

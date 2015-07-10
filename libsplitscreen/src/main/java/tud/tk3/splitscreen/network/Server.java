@@ -23,7 +23,7 @@ public class Server extends com.esotericsoftware.kryonet.Server {
 
     public Server(int port, final String nickname) throws IOException {
         // method to start the server for a given port & nickname
-        super();
+        super(1024*1024, 2048);
         Network.register(this);
         bind(port, port);
         // register discovery handler that responses with the server nickname
