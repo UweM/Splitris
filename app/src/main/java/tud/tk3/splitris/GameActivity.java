@@ -34,17 +34,17 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
-        //gDetector = new GestureDetectorCompat(this,null);
 
         ScreenView game = (ScreenView) findViewById(R.id.game_screen);
         ScreenView info = (ScreenView) findViewById(R.id.info_screen);
+        //We are at the Client
         if(GameContext.Client != null) {
             GameContext.Client.registerView(0, game);
             GameContext.Client.registerView(1, info);
         }
+        //We are at the Server
         else {
             Initiator init = new Initiator();
-            init.configureBlockScreens(GameContext.Players, game);
             GameContext.Controller = new GameController(null, null);
             BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
             BlockScreen preview = new BlockScreen(1, 4, 4);
@@ -54,7 +54,7 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
                 if(p.getConnection() != null)
                     vp.addView(p.getConnection().getRemoteView(1));
             }
-            preview.setOccupied(Color.BLUE);
+            preview.setOccupied(Color.GREEN);
             GameContext.startGame(bs, preview);
         }
 
