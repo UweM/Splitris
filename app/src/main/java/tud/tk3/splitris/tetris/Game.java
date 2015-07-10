@@ -39,8 +39,6 @@ public class Game {
         rnd = new Random(System.currentTimeMillis());
         mActiveElement = new Element(this, rnd.nextInt(ElementTemplate.COUNT));
         mNextItem = rnd.nextInt(ElementTemplate.COUNT);
-        //TODO CHEAT
-        mNextItem = 1;
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
