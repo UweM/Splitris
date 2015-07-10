@@ -1,7 +1,9 @@
 package tud.tk3.splitris;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.GameControllerInterface;
 import tud.tk3.splitris.network.Player;
@@ -20,6 +24,7 @@ import tud.tk3.splitscreen.output.IScreenView;
 import tud.tk3.splitscreen.output.ScreenView;
 import tud.tk3.splitscreen.output.Viewport;
 import tud.tk3.splitscreen.screen.BlockScreen;
+import tud.tk3.splitscreen.screen.VirtualScreen;
 
 public class GameActivity extends Activity implements GestureDetector.OnGestureListener {
     // game activity class - activity containing the main code for the game
@@ -39,32 +44,65 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         setContentView(R.layout.gameactivity);
 
         // include both ScreenViews -> one for displaying the game & one for displaing the info screen
-        ScreenView game = (ScreenView) findViewById(R.id.game_screen);
-        ScreenView info = (ScreenView) findViewById(R.id.info_screen);
+        final ScreenView game = (ScreenView) findViewById(R.id.game_screen);
+        final ScreenView info = (ScreenView) findViewById(R.id.info_screen);
         if(GameContext.Client != null) {
-        //We are at the Client
+            //We are at the Client
             GameContext.Client.registerView(0, game);
             GameContext.Client.registerView(1, info);
         }
         else {
             //We are at the Server
-            Initiator init = new Initiator();
-            GameContext.Controller = new GameController(null, null);
-            BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
-            BlockScreen preview = new BlockScreen(3, 15, 23); // Pixel size of the block
-            Viewport vp = new Viewport(preview, 0, 0, preview.getWidth(), preview.getHeight());
-            vp.addView(info);
-            for(Player p : GameContext.Players) {
-                if(p.getConnection() != null)
-                    vp.addView(p.getConnection().getRemoteView(1));
+
+
+            Bundle extras = getIntent().getExtras();
+            String selected_images[] = null;
+
+            if (extras != null) {
+                selected_images = extras.getStringArray("SELECTED_IMAGES");
             }
-            preview.setOccupied(Color.GREEN);
-            GameContext.startGame(bs, preview);
+
+            if(selected_images == null || selected_images.length == 0) { // tetris mode
+
+                Initiator init = new Initiator();
+                GameContext.Controller = new GameController(null, null);
+                BlockScreen bs = init.configureBlockScreens(GameContext.Players, game);
+                BlockScreen preview = new BlockScreen(3, 15, 23);
+                Viewport vp = new Viewport(preview, 0, 0, preview.getWidth(), preview.getHeight());
+                vp.addView(info);
+                for (Player p : GameContext.Players) {
+                    if (p.getConnection() != null)
+                        vp.addView(p.getConnection().getRemoteView(1));
+                }
+                preview.setOccupied(Color.GREEN);
+                GameContext.startGame(bs, preview);
+            }
+            else { // demo mode
+                // deactivate that users may controll a game
+                for(GameController ctrl : GameContext.Server.getGameControllers())
+                    ctrl.setCanControl(false);
+                final String images[] = selected_images;
+                new Thread() {
+                    @Override
+                    public void run() {
+                        for (String image : images) {
+                            try {
+                                ImageDemo.showImage(GameActivity.this, GameContext.Players, Uri.parse(image), game);
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                break;
+                            }
+                        }
+                    }
+                }.start();
+            }
         }
 
 
         gDetector = new GestureDetector(this, this);
     }
+
 
     public boolean onLeftBtnClicked(View view) {
         // Method for handling the left clicks & swipes
