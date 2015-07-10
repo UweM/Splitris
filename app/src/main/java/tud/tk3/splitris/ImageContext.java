@@ -35,9 +35,8 @@ public class ImageContext {
         Client = new Client();
     }
 
-    public static void initServer() {
-        //TODO
-        //Server = new GameServer(PORT, "");
-        //Server.start();
+    public static void initServer() throws IOException{
+        Server = new GameServer(PORT, "");
+        Server.start();
     }
 }

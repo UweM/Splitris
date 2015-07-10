@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import java.io.IOError;
+import java.io.IOException;
+
 import tud.tk3.splitris.network.GameController;
 import tud.tk3.splitris.network.Player;
 import tud.tk3.splitris.tetris.Initiator;
@@ -23,9 +26,17 @@ public class ImageActivity extends Activity {
         //We are at the Client
         if(ImageContext.Client != null) {
             ImageContext.Client.registerView(0, image_screen);
+
+            ImageContext.initClient();
         }
         //We are at the Server
         else {
+            try {
+                ImageContext.initServer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             Initiator init = new Initiator();
             BlockScreen bs = init.configureBlockScreens(ImageContext.Contributers, image_screen);
             ImageContext.startDisplay(bs);
