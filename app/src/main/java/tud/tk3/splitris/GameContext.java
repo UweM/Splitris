@@ -44,7 +44,8 @@ public class GameContext {
 
                     while(true) {
                         if(!Game.tick()) return;
-                        Thread.sleep(500);
+                        int sleepTime = 500 - (Game.getStandardizedLevel() * 50);
+                        Thread.sleep(sleepTime);
                     }
 
                 } catch (InterruptedException ignored) {

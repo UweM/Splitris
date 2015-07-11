@@ -25,6 +25,7 @@ public class Game {
     private int mMoveDown;
     private int mPoints;
     private int mlevel;
+    private int clearedRows = 0;
 
     public Game(BlockScreen screen, BlockScreen preview, int width, int height) {
         // main method for starting a new game
@@ -88,6 +89,10 @@ public class Game {
         mPreview.render();
     }
 
+    public int getStandardizedLevel() {
+        return this.mlevel -1;
+    }
+
     private void calculatePoints()
     {
         // calculate the achieved points for each game
@@ -127,8 +132,27 @@ public class Game {
         mActiveElement = new Element(this, mNextItem);
         mNextItem = rnd.nextInt(ElementTemplate.COUNT);
         mMoveDown = MoveDown; // save completed rows
+        clearedRows += MoveDown;
+
         calculatePoints(); // after this points are actualized
         onNewElement();
+    }
+
+    public void calculateLevel(){
+
+        //adjust the level for speedup & points
+        if (clearedRows <= 0)
+        {
+            mlevel = 1;
+        }
+        else if ((clearedRows  >= 1) && (clearedRows  <= 90))
+        {
+            mlevel = 1 + ((clearedRows  - 1) / 10);
+        }
+        else if (clearedRows  >= 91)
+        {
+            mlevel = 10;
+        }
     }
 
     public void setField(int x, int y, Cube cube) {
