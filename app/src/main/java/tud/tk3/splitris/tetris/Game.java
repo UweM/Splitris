@@ -63,6 +63,8 @@ public class Game {
     }
 
     public void fastTick(){
+        if(!this.isGameRunning())
+            return;
         while(mActiveElement.moveDown());
         onLineComplete();
         mScreen.render();
@@ -148,20 +150,29 @@ public class Game {
     }
 
     public boolean moveX(boolean toLeft) {
+        if(!this.isGameRunning())
+            return false;
+
         boolean ret = mActiveElement.moveX(toLeft);
         mScreen.render();
         return ret;
     }
 
     public boolean moveRight() {
+        if(!this.isGameRunning())
+            return false;
         return moveX(false);
     }
 
     public boolean moveLeft() {
+        if(!this.isGameRunning())
+            return false;
         return moveX(true);
     }
 
     public boolean rotate() {
+        if(!this.isGameRunning())
+            return false;
         boolean ret = mActiveElement.rotate();
         mScreen.render();
         return ret;
