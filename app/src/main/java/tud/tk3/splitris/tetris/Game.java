@@ -147,6 +147,17 @@ public class Game {
 
     public void GameOver() {
         mGameRunning = false;
+
+        mScreen.redraw();
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.FILL);
+        mScreen.drawPaint(paint);
+
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(7);
+
+        mScreen.drawText("X-(", mScreen.getWidth()/2-4, mScreen.getHeight()/2, paint);
     }
 
     public boolean moveX(boolean toLeft) {
