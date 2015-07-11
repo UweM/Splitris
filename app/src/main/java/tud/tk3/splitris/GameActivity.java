@@ -220,6 +220,8 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
         final float xDistance = Math.abs(e1.getX() - e2.getX());
         final float yDistance = Math.abs(e1.getY() - e2.getY());
 
+        int xFields = (int) xDistance / 80;
+
         if(xDistance > swipe_Max_Distance || yDistance > swipe_Max_Distance)
             return false;
 
@@ -230,13 +232,25 @@ public class GameActivity extends Activity implements GestureDetector.OnGestureL
 
         if(velocityX > swipe_Min_Velocity && xDistance > swipe_Min_Distance){
             if(e1.getX() > e2.getX()){ // right to left
-                Log.d(TAG, "left");
-                return onLeftBtnClicked(null);
+                boolean result = false;
+
+                for( int i = 0; i < xFields; i++) {
+                    Log.d(TAG, "left");
+                    result = onLeftBtnClicked(null);
+                }
+
+                return result;
             }
             else // left to right
             {
-                Log.d(TAG, "right");
-                return onRightBtnClicked(null);
+                boolean result = false;
+
+                for( int i = 0; i < xFields; i++) {
+                    Log.d(TAG, "right");
+                    result = onRightBtnClicked(null);
+                }
+
+                return result;
             }
         }
         else if(velocityY > swipe_Min_Velocity && yDistance > swipe_Min_Distance){
