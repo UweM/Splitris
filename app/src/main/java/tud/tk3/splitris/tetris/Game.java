@@ -157,7 +157,7 @@ public class Game {
         paint.setColor(Color.BLACK);
         paint.setTextSize(7);
 
-        mScreen.drawText("X-(", mScreen.getWidth()/2-4, mScreen.getHeight()/2, paint);
+        mScreen.drawText("LOL", mScreen.getWidth()/2-8, mScreen.getHeight()/2, paint);
     }
 
     public boolean moveX(boolean toLeft) {
