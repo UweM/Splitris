@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import java.util.Random;
 
+import tud.tk3.splitris.GameContext;
 import tud.tk3.splitscreen.screen.BlockScreen;
 
 public class Game {
@@ -26,6 +27,7 @@ public class Game {
     private int mPoints;
     private int mlevel;
     private int clearedRows = 0;
+    private double playerPointCorrection;
 
     public Game(BlockScreen screen, BlockScreen preview, int width, int height) {
         // main method for starting a new game
@@ -34,6 +36,7 @@ public class Game {
         mMoveDown = 0;
         mlevel = 1;
         mPreview = preview;
+        playerPointCorrection = 1 + (Math.log(GameContext.Players.size())/Math.log(2));
         FIELD_WIDTH = width;
         FIELD_HEIGHT = height;
         mFields = new Cube[FIELD_WIDTH][FIELD_HEIGHT];
@@ -99,19 +102,19 @@ public class Game {
         // Rules: 40 * level for one complete row, 100 * level for two complete rows, 300 * level for three complete rows, 1200 * level for four complete rows.
         if (mMoveDown == 1)
         {
-            mPoints += 40 * mlevel ;
+            mPoints += (int) (40 * mlevel * playerPointCorrection );
         }
         else if (mMoveDown == 2)
         {
-            mPoints += 100 * mlevel ;
+            mPoints += (int) (100 * mlevel * playerPointCorrection );
         }
         else if (mMoveDown == 3)
         {
-            mPoints += 300 * mlevel ;
+            mPoints += (int) (300 * mlevel * playerPointCorrection );
         }
         else if (mMoveDown >= 4)
         {
-            mPoints += 1200 * mlevel ;
+            mPoints += (int) (1200 * mlevel * playerPointCorrection );
         }
     }
 
@@ -135,6 +138,7 @@ public class Game {
         clearedRows += MoveDown;
 
         calculatePoints(); // after this points are actualized
+        calculateLevel();
         onNewElement();
     }
 
@@ -145,7 +149,7 @@ public class Game {
         {
             mlevel = 1;
         }
-        else if ((clearedRows  >= 1) && (clearedRows  <= 90))
+       else if ((clearedRows  >= 1) && (clearedRows  <= 90))
         {
             mlevel = 1 + ((clearedRows  - 1) / 10);
         }
