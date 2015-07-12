@@ -1,5 +1,7 @@
 package tud.tk3.splitris.tetris;
 
+import java.util.Random;
+
 public class Element {
     // class defining an tetris element
 
@@ -28,7 +30,7 @@ public class Element {
     //the empty (false) fields are ignored.
     //the used (true) fields will be displayed and used for collision detection
 
-
+    private static Random rnd = new Random();
 
     public boolean[][] mUsedFields = new boolean[4][4];
     public Cube[][] mChildCubes = new Cube[4][4];
@@ -39,7 +41,8 @@ public class Element {
 
     public Element(Game TetrisMain, int Item) {
         this.mGame = TetrisMain;
-        this.mPosX = (Game.FIELD_WIDTH / 2)-1;
+        // randomly set the new element in the field (keep the edges free)
+        this.mPosX = 4 + rnd.nextInt(Game.FIELD_WIDTH - 4 - 4);
         this.mPosY = Game.FIELD_HEIGHT - 1;
 
         this.mUsedFields = ElementTemplate.getFields(Item);
